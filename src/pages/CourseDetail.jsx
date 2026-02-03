@@ -23,6 +23,7 @@ import ProgressBar from '@/components/ui/ProgressBar';
 import ChatBox from '@/components/ChatBox';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import certificateService from '@/components/services/certificateService';
 
 export default function CourseDetail() {
   const navigate = useNavigate();
@@ -370,6 +371,13 @@ export default function CourseDetail() {
               </p>
 
               <Button
+                onClick={() => {
+                  certificateService.generateCertificate(
+                    course.title,
+                    user?.name || 'Student',
+                    progress.mastery || 85
+                  );
+                }}
                 className="w-full py-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold"
               >
                 <Download className="w-5 h-5 mr-2" />
