@@ -41,6 +41,7 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#212121' }}>
+      <meta name="referrer" content="no-referrer" />
       <style>{`
         @import url('https://fonts.cdnfonts.com/css/akkurat');
 
