@@ -57,6 +57,10 @@ export default function Layout({ children }) {
           transition: background 0.3s ease, color 0.3s ease;
         }
         
+        * {
+          font-weight: 400 !important;
+        }
+        
         .glass-card {
           background: var(--glass-bg);
           backdrop-filter: blur(10px);
@@ -116,9 +120,9 @@ export default function Layout({ children }) {
           padding-bottom: env(safe-area-inset-bottom, 0);
         }
         
-        h1, .text-headline { font-size: 32px; font-weight: 600; }
-        .text-body { font-size: 16px; font-weight: 400; }
-        .text-sub { font-size: 14px; font-weight: 400; }
+        h1, .text-headline { font-size: 32px; }
+        .text-body { font-size: 16px; }
+        .text-sub { font-size: 14px; }
         
         .section-spacing { padding: 24px 0; }
         .card-spacing { margin: 16px 0; }
