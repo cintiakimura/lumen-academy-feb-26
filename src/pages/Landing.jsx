@@ -50,18 +50,18 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center" style={{ minHeight: '100vh', padding: '32px' }}>
+      <section className="relative flex items-center" style={{ minHeight: '33vh', padding: '32px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
-            <div className="relative" style={{ height: '50px' }}>
+            <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
                 alt="Professional learning" 
                 className="w-full h-full object-cover opacity-20"
               />
             </div>
-            <div className="relative" style={{ height: '50px' }}>
+            <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
                 alt="Student learning" 
