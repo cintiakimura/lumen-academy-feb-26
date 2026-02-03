@@ -275,6 +275,61 @@ export default function Onboarding() {
           </div>
         )}
 
+        {step === 4 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <p style={{ color: '#E0E0E0', marginBottom: '8px' }}>Add Teachers</p>
+            {teachers.map((teacher, idx) => (
+              <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                <input
+                  type="email"
+                  placeholder="teacher@example.com"
+                  value={teacher}
+                  onChange={(e) => handleTeacherChange(idx, e.target.value)}
+                  style={{
+                    flex: 1,
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid #333333',
+                    borderRadius: '12px',
+                    padding: '12px',
+                    color: '#E0E0E0',
+                    fontSize: '14px'
+                  }}
+                />
+                {teachers.length > 1 && (
+                  <button
+                    onClick={() => handleRemoveTeacher(idx)}
+                    style={{
+                      background: 'transparent',
+                      border: '1px solid #333333',
+                      borderRadius: '12px',
+                      padding: '12px 16px',
+                      color: '#E0E0E0',
+                      cursor: 'pointer',
+                      fontSize: '14px'
+                    }}
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              onClick={handleAddTeacher}
+              style={{
+                background: 'transparent',
+                border: '1px dashed #333333',
+                borderRadius: '12px',
+                padding: '12px',
+                color: '#00c600',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              + Add Teacher
+            </button>
+          </div>
+        )}
+
         {/* Navigation */}
         <div style={{ display: 'flex', gap: '16px', marginTop: '32px' }}>
           {step > 1 && (
