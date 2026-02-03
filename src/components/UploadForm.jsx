@@ -20,18 +20,26 @@ export default function UploadForm({ onCourseCreated, onClose }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [generatedLessons, setGeneratedLessons] = useState(null);
   const [error, setError] = useState('');
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
   const handleFileDrop = useCallback((e) => {
     e.preventDefault();
     const droppedFile = e.dataTransfer?.files[0] || e.target.files[0];
     if (droppedFile) {
+      if (droppedFile.size > MAX_FILE_SIZE) {
+        setError(`File size exceeds 50MB limit (${(droppedFile.size / 1024 / 1024).toFixed(1)}MB). Please use a smaller file.`);
+        return;
+      }
       setFile(droppedFile);
+      setError('');
       
-      // Read file content
       const reader = new FileReader();
       reader.onload = (event) => {
         const content = event.target.result;
         setCourseData(prev => ({ ...prev, content }));
+      };
+      reader.onerror = () => {
+        setError('Failed to read file. Please try again.');
       };
       reader.readAsText(droppedFile);
     }
@@ -159,33 +167,18 @@ export default function UploadForm({ onCourseCreated, onClose }) {
                   />
                 </div>
 
-                {/* Category */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
-                    Category
-                  </label>
-                  <Select
-                    value={courseData.category}
-                    onValueChange={(value) => setCourseData(prev => ({ ...prev, category: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="auto_repair">Auto Repair</SelectItem>
-                      <SelectItem value="welding">Welding</SelectItem>
-                      <SelectItem value="sales">Sales</SelectItem>
-                      <SelectItem value="accounting">Accounting</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+
 
                 {/* File Upload */}
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-2">
                     Content *
                   </label>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4">
+                    <p className="text-xs text-amber-800">
+                      ⚠️ <strong>Privacy Notice:</strong> Links and hyperlinks in your content will be ignored for privacy. Upload plain text if possible.
+                    </p>
+                  </div>
                   <div
                     onDrop={handleFileDrop}
                     onDragOver={handleDragOver}
@@ -208,7 +201,9 @@ export default function UploadForm({ onCourseCreated, onClose }) {
                         <div className="text-left">
                           <p className="font-medium text-slate-800">{file.name}</p>
                           <p className="text-sm text-slate-500">
-                            {(file.size / 1024).toFixed(1)} KB
+                            {file.size > 1024 * 1024 
+                              ? `${(file.size / 1024 / 1024).toFixed(1)} MB` 
+                              : `${(file.size / 1024).toFixed(1)} KB`}
                           </p>
                         </div>
                         <Button
@@ -218,6 +213,7 @@ export default function UploadForm({ onCourseCreated, onClose }) {
                             e.stopPropagation();
                             setFile(null);
                             setCourseData(prev => ({ ...prev, content: '' }));
+                            setError('');
                           }}
                         >
                           <X className="w-4 h-4" />
@@ -228,7 +224,7 @@ export default function UploadForm({ onCourseCreated, onClose }) {
                         <Upload className="w-10 h-10 text-slate-400 mx-auto mb-3" />
                         <p className="font-medium text-slate-700">Drop your file here</p>
                         <p className="text-sm text-slate-500 mt-1">or click to browse</p>
-                        <p className="text-xs text-slate-400 mt-2">Supports PDF, TXT, DOC</p>
+                        <p className="text-xs text-slate-400 mt-2">Supports PDF, TXT, DOC (up to 50MB)</p>
                       </>
                     )}
                   </div>
