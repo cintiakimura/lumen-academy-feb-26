@@ -28,9 +28,11 @@ export default function TeacherAnalytics() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated() || !authService.isTeacher()) {
-      navigate(createPageUrl('Login'));
-    }
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
   }, [navigate]);
 
   // Mock data for charts

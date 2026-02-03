@@ -33,10 +33,11 @@ export default function Profile() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
-      navigate(createPageUrl('Login'));
-      return;
-    }
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
     setUser(authService.getCurrentUser());
     setCourses(storageService.getCourses());
     setProgress(storageService.getProgress(authService.getCurrentUser()?.id));

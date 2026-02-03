@@ -40,9 +40,11 @@ export default function Settings() {
   const user = authService.getCurrentUser();
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
-      navigate(createPageUrl('Login'));
-    }
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
   }, [navigate]);
 
   const handleLogoUpload = (e) => {
