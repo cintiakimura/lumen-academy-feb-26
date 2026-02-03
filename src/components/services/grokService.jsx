@@ -1,45 +1,85 @@
 import { base44 } from '@/api/base44Client';
 
 export const grokService = {
-  // Structure course content into lessons
+  // Structure course content into lessons using Lumen Academy method
   async structureCourse(rawContent, courseTitle) {
     const response = await base44.integrations.Core.InvokeLLM({
-      prompt: `You are an expert vocational training curriculum designer. Take the following course content and structure it into 5-10 lessons, each approximately 5 minutes long.
+      prompt: `You are an expert instructional designer using the Lumen Academy method for vocational training.
+
+Transform the following content into a structured micro-learning course following these STRICT rules:
+
+1. Divide into 5–12 short modules (lessons) — each ~5 minutes maximum
+2. Lesson types (assign one per lesson):
+   - theory (spoken summary / podcast-style script — casual, conversational)
+   - visual (infographic or slide bullets + describe 1 key image/diagram)
+   - video (short 3–5 min video concept — describe what video should show)
+   - chat (interactive questions or quick reflection prompts)
+   - mental_practice (ONLY in final lesson: guided imagination scenario)
+3. Respect original content: do not add new facts. Rephrase for clarity only.
+4. Keep language simple, practical, vocational.
+5. Final module should end with strong mental practice.
 
 Course Title: ${courseTitle}
 
 Raw Content:
 ${rawContent}
 
-For each lesson, provide:
-1. A clear title
-2. Format type (one of: "podcast", "slides", "video", "infographic")
-3. Key content/talking points
-4. Estimated duration in minutes
-
-Structure this for adult learners in vocational training - practical, hands-on, easy to understand.`,
+Return structured course following the format.`,
       response_json_schema: {
         type: "object",
         properties: {
-          lessons: {
+          course_title: { type: "string" },
+          description: { type: "string" },
+          modules: {
             type: "array",
             items: {
               type: "object",
               properties: {
-                id: { type: "string" },
-                title: { type: "string" },
-                format: { type: "string" },
-                content: { type: "string" },
-                duration: { type: "number" },
-                keyPoints: { type: "array", items: { type: "string" } }
+                module_title: { type: "string" },
+                lessons: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      lesson_title: { type: "string" },
+                      type: { type: "string", enum: ["theory", "visual", "video", "chat", "mental_practice"] },
+                      content_summary: { type: "string" },
+                      suggested_output: { type: "string" }
+                    }
+                  }
+                },
+                final_mental_practice: { type: "boolean" }
               }
             }
           },
-          summary: { type: "string" }
+          cert_note: { type: "string" }
         }
       }
     });
-    return response;
+    
+    // Convert to app format
+    const lessons = [];
+    let lessonId = 1;
+    
+    response.modules?.forEach((module, moduleIdx) => {
+      module.lessons?.forEach((lesson, lessonIdx) => {
+        lessons.push({
+          id: `l${lessonId++}`,
+          title: lesson.lesson_title,
+          format: lesson.type,
+          content: lesson.content_summary,
+          duration: 5,
+          keyPoints: [lesson.suggested_output]
+        });
+      });
+    });
+    
+    return {
+      course_title: response.course_title || courseTitle,
+      description: response.description,
+      lessons: lessons,
+      summary: response.description
+    };
   },
 
   // Chat with student - assess mastery
