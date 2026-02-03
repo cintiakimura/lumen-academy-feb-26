@@ -26,117 +26,152 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E0F2FE] via-white to-[#EEF2FF]" style={{ fontFamily: 'Manrope, Inter, sans-serif' }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap');
-        
-        .handwritten-feel {
-          font-variation-settings: 'wght' 300;
-          letter-spacing: -0.02em;
-        }
-        
-        .paper-texture {
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(10px);
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-        
-        .polaroid-shadow {
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-          border: 12px solid white;
-          border-bottom-width: 40px;
-        }
-        
-        .teal-glow:hover {
-          box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-        }
-      `}</style>
-
+    <div className="min-h-screen bg-[#1A1A1A]">
       {/* Top Nav */}
-      <nav className="absolute top-0 right-0 p-6 flex gap-3 z-10">
-        <Link to={createPageUrl('Onboarding')}>
-          <button className="px-4 py-2 text-sm text-[#1F2937] bg-white/50 backdrop-blur-sm rounded-full transition-all hover:bg-white hover:shadow-md teal-glow">
-            I want to teach
+      <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
+        <div className="text-2xl font-bold text-[#00D100] tracking-tight">
+          LUMEN
+        </div>
+        <div className="flex gap-4">
+          <button 
+            onClick={handleLogin}
+            className="px-6 py-2 text-sm font-medium text-[#1A1A1A] bg-[#00D100] rounded-md hover:bg-[#00B800] transition-colors uppercase tracking-wider"
+          >
+            FREE DEMO
           </button>
-        </Link>
-        <Link to={createPageUrl('Onboarding')}>
-          <button className="px-4 py-2 text-sm text-[#1F2937] bg-white/50 backdrop-blur-sm rounded-full transition-all hover:bg-white hover:shadow-md teal-glow">
-            I want to learn
+          <button 
+            onClick={handleLogin}
+            className="px-6 py-2 text-sm font-medium text-[#00D100] border border-[#00D100] rounded-md hover:bg-[#00D100] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider"
+          >
+            LOGIN
           </button>
-        </Link>
-        <button 
-          onClick={handleLogin}
-          className="px-4 py-2 text-sm text-white bg-[#0EA5E9] rounded-full transition-all hover:bg-[#0284C7] hover:shadow-lg teal-glow"
-        >
-          Login / Sign up
-        </button>
+        </div>
       </nav>
 
-      {/* Hero */}
-      <section className="px-6 py-20 lg:py-32">
-        <div className="max-w-6xl mx-auto">
-          {/* Headline */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl text-[#1F2937] mb-4 leading-relaxed handwritten-feel" style={{ fontWeight: 300 }}>
-              Your pace. Your way. We understand.
-            </h1>
-          </div>
-
-          {/* Photos Side by Side - Full Width */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mb-16 w-full max-w-full -mx-6">
-            <div className="w-full h-[50vh] md:h-[60vh]">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div className="grid grid-cols-2 h-full">
+            <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
                 alt="Professional learning" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-40"
               />
             </div>
-            <div className="w-full h-[50vh] md:h-[60vh]">
+            <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
                 alt="Student learning" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover opacity-40"
               />
             </div>
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/80 via-[#1A1A1A]/60 to-[#1A1A1A]" />
+        </div>
 
-          {/* Body Text - Letter Style */}
-          <div className="max-w-3xl mx-auto space-y-12">
-            <p className="text-lg text-[#1F2937] leading-relaxed" style={{ fontWeight: 300 }}>
-              Cutting-edge AI meets neuroscience — so every moment fits you.
-            </p>
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
+          <h1 className="text-5xl lg:text-7xl font-light text-[#00D100] mb-6 leading-tight">
+            Learning made easy
+          </h1>
+          <p className="text-xl lg:text-2xl text-white font-light max-w-2xl">
+            Turn any content into adaptive micro-lessons
+          </p>
+        </div>
+      </section>
 
-            <div className="space-y-3 paper-texture rounded-2xl p-8">
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Night owl? We wait till you're ready.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Early bird? We start before dawn.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Neurodivergent? Short bursts, no pressure — all progress.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Frustrated? We pause, adjust, go deeper when you're calm.
+      {/* Features Section */}
+      <section className="py-24 px-6 lg:px-8 bg-[#1A1A1A]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <div className="text-[#00D100] text-5xl font-bold">01</div>
+              <h3 className="text-2xl font-light text-white">Adaptive learning</h3>
+              <p className="text-[#8B8B8B] leading-relaxed">
+                AI-powered lessons that adapt to your pace, learning style, and schedule. Night owl or early bird, we're ready when you are.
               </p>
             </div>
-
-            <div className="space-y-6 paper-texture rounded-2xl p-8">
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                <span className="text-[#0EA5E9]">65%</span> learn best through conversation — not slides. We make it feel like real talk.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                <span className="text-[#0EA5E9]">70%</span> retain more with podcasts or audio — short, on-the-go. We turn content into bite-sized listening.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Visual learners grab <span className="text-[#0EA5E9]">65%</span> more when they picture it first. We add diagrams — then mental rehearsal.
+            
+            <div className="space-y-4">
+              <div className="text-[#00D100] text-5xl font-bold">02</div>
+              <h3 className="text-2xl font-light text-white">Any format, any time</h3>
+              <p className="text-[#8B8B8B] leading-relaxed">
+                Convert content into podcasts, videos, slides, or interactive conversations. Learn on-the-go or deep-dive at your desk.
               </p>
             </div>
-
-            <p className="text-sm text-[#6B7280] text-center leading-relaxed" style={{ fontWeight: 300 }}>
-              Backed by more than 103 studies — because one method doesn't fit everyone.
-            </p>
+            
+            <div className="space-y-4">
+              <div className="text-[#00D100] text-5xl font-bold">03</div>
+              <h3 className="text-2xl font-light text-white">Anywhere you need</h3>
+              <p className="text-[#8B8B8B] leading-relaxed">
+                Deliver remote training with the same quality as in-person sessions. Access your courses from any device, anywhere.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className="py-24 px-6 lg:px-8 bg-[#0D0D0D]">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-5xl font-light text-white mb-6">
+            Pioneering technology for your learning
+          </h2>
+          <p className="text-xl text-[#8B8B8B] mb-16 max-w-3xl mx-auto">
+            Cutting-edge AI meets neuroscience research — every moment designed to fit your unique learning profile
+          </p>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8 text-left">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#1A1A1A] font-bold text-xl">AI</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-medium text-white mb-2">Smart Content Engine</h3>
+                  <p className="text-[#8B8B8B]">
+                    Transforms any content into bite-sized, engaging lessons optimized for retention
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-[#1A1A1A] font-bold text-xl">🧠</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-medium text-white mb-2">Adaptive Platform</h3>
+                  <p className="text-[#8B8B8B]">
+                    Monitors your progress and adjusts in real-time based on neuroscience principles
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="aspect-square bg-gradient-to-br from-[#00D100]/20 to-transparent rounded-2xl flex items-center justify-center">
+                <div className="text-[#00D100] text-8xl">📱</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 px-6 lg:px-8 bg-[#1A1A1A]">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-sm text-[#8B8B8B] mb-4 uppercase tracking-wider">Backed by 103+ studies</p>
+          <h2 className="text-4xl lg:text-5xl font-light text-white mb-8">
+            Because one method doesn't fit everyone
+          </h2>
+          <button 
+            onClick={handleLogin}
+            className="px-12 py-4 text-lg font-medium text-[#1A1A1A] bg-[#00D100] rounded-lg hover:bg-[#00B800] transition-colors uppercase tracking-wider"
+          >
+            Get Started
+          </button>
         </div>
       </section>
     </div>
