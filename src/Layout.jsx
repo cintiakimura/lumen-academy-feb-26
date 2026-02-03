@@ -27,27 +27,29 @@ export default function Layout({ children }) {
         :root {
           --bg: #212121;
           --text: #E0E0E0;
-          --text-muted: #A0A0A0;
+          --text-muted: #4D4D4D;
           --primary: #00c600;
           --primary-hover: #00e600;
           --glass-bg: rgba(255, 255, 255, 0.05);
           --glass-border: #333333;
           --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          --surface: #2D2D2D;
+          --surface: #333333;
           --surface-light: #4D4D4D;
+          --black: #000000;
         }
         
         [data-theme="light"] {
           --bg: #FFFFFF;
           --text: #212121;
-          --text-muted: #6B7280;
+          --text-muted: #4D4D4D;
           --primary: #00c600;
           --primary-hover: #00e600;
           --glass-bg: rgba(0, 0, 0, 0.04);
           --glass-border: #E0E0E0;
           --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          --surface: #F5F5F5;
-          --surface-light: #E0E0E0;
+          --surface: #E0E0E0;
+          --surface-light: #FFFFFF;
+          --black: #000000;
         }
         
         body {
@@ -57,26 +59,23 @@ export default function Layout({ children }) {
           transition: background 0.3s ease, color 0.3s ease;
         }
         
-        * {
-          font-weight: 400 !important;
-        }
-        
         .glass-card {
           background: var(--glass-bg);
           backdrop-filter: blur(10px);
           border: 1px solid var(--glass-border);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
           border-radius: 16px;
-          max-width: 320px;
           padding: 24px;
-          margin: 16px;
         }
         
-        @media (max-width: 768px) {
-          .glass-card {
-            max-width: 90%;
-            width: 90%;
-          }
+        [data-theme="dark"] .glass-card {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid #333333;
+        }
+        
+        [data-theme="light"] .glass-card {
+          background: rgba(0, 0, 0, 0.04);
+          border: 1px solid #E0E0E0;
         }
         
         .btn-primary {
@@ -84,9 +83,11 @@ export default function Layout({ children }) {
           padding: 0 24px;
           border-radius: 12px;
           background: var(--primary);
-          color: var(--bg);
+          color: #000000;
           font-weight: 600;
           transition: all 0.2s ease;
+          border: none;
+          cursor: pointer;
         }
         
         .btn-primary:hover {
@@ -120,13 +121,50 @@ export default function Layout({ children }) {
           padding-bottom: env(safe-area-inset-bottom, 0);
         }
         
-        h1, .text-headline { font-size: 32px; }
-        .text-body { font-size: 16px; }
-        .text-sub { font-size: 14px; }
+        h1, .text-headline { font-size: 32px; font-weight: 600; }
+        .text-body { font-size: 16px; font-weight: 400; }
+        .text-sub { font-size: 14px; font-weight: 400; }
         
         .section-spacing { padding: 24px 0; }
         .card-spacing { margin: 16px 0; }
         .hero-padding { padding: 32px; }
+        
+        .bottom-nav {
+          height: 64px;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: var(--glass-bg);
+          backdrop-filter: blur(10px);
+          border-top: 1px solid var(--glass-border);
+        }
+        
+        .bottom-nav-icon {
+          width: 28px;
+          height: 28px;
+        }
+        
+        .bottom-nav-label {
+          font-size: 12px;
+        }
+        
+        .sidebar {
+          width: 280px;
+          background: var(--glass-bg);
+          backdrop-filter: blur(10px);
+          border-right: 1px solid var(--glass-border);
+        }
+        
+        .sidebar-header {
+          height: 80px;
+        }
+        
+        @media (max-width: 768px) {
+          .sidebar {
+            width: 100%;
+          }
+        }
       `}</style>
       {children}
     </div>

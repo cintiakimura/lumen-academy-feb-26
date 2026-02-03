@@ -10,9 +10,11 @@ export default function Landing() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
       <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
-        <div className="text-2xl font-bold tracking-tight" style={{ color: 'var(--primary)' }}>
-          LUMEN
-        </div>
+        <img 
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/1cf3c4952_lumenlogo.png"
+          alt="LUMEN"
+          style={{ height: '40px' }}
+        />
         <div className="flex gap-4">
           <button 
             onClick={handleLogin}
@@ -48,7 +50,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center" style={{ minHeight: '50vh', padding: '16px' }}>
+      <section className="relative flex items-center" style={{ minHeight: '100vh', padding: '32px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
@@ -72,12 +74,19 @@ export default function Landing() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-6xl mx-auto text-left">
-          <h1 style={{ fontSize: '48px', color: '#00c600', marginBottom: '12px', lineHeight: 1.2, fontWeight: '100' }}>
+          <h1 style={{ fontSize: '120px', color: '#00c600', marginBottom: '24px', lineHeight: 1.1, fontWeight: '100' }}>
             Learning made for you, and just for you
           </h1>
-          <p style={{ fontSize: '21.6px', color: '#FFFFFF', maxWidth: '640px' }}>
+          <p style={{ fontSize: '24px', color: '#FFFFFF', maxWidth: '800px', marginBottom: '48px' }}>
             Cutting-edge AI meets neuroscience to transform any course into a truly personalized learning experience
           </p>
+          <button 
+            onClick={() => window.location.href = '#'}
+            className="btn-primary uppercase tracking-wider"
+            style={{ height: '48px' }}
+          >
+            GET STARTED
+          </button>
         </div>
       </section>
 
