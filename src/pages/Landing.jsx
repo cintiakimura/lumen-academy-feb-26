@@ -1,28 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
+import React from 'react';
 import { base44 } from '@/api/base44Client';
 
 export default function Landing() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if user is already authenticated and redirect
-    base44.auth.isAuthenticated().then(isAuth => {
-      if (isAuth) {
-        base44.auth.me().then(user => {
-          if (user.role === 'admin') {
-            navigate(createPageUrl('TeacherDashboard'));
-          } else {
-            navigate(createPageUrl('StudentDashboard'));
-          }
-        });
-      }
-    });
-  }, [navigate]);
-
   const handleLogin = () => {
-    base44.auth.redirectToLogin(window.location.origin + createPageUrl('Landing'));
+    base44.auth.redirectToLogin();
   };
 
   return (
