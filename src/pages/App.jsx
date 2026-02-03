@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import Layout from '@/components/Layout';
 import Landing from './Landing';
 import Onboarding from './Onboarding';
 import TeacherDashboard from './TeacherDashboard';
@@ -48,19 +49,21 @@ export default function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/onboarding" element={user ? <Onboarding /> : <Navigate to="/" />} />
-        <Route path="/teacher/dashboard" element={user?.role === 'teacher' ? <TeacherDashboard /> : <Navigate to="/" />} />
-        <Route path="/teacher/courses" element={user?.role === 'teacher' ? <TeacherCourses /> : <Navigate to="/" />} />
-        <Route path="/teacher/students" element={user?.role === 'teacher' ? <TeacherStudents /> : <Navigate to="/" />} />
-        <Route path="/teacher/analytics" element={user?.role === 'teacher' ? <TeacherAnalytics /> : <Navigate to="/" />} />
-        <Route path="/student/dashboard" element={user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/" />} />
-        <Route path="/course/:id" element={user ? <CourseDetail /> : <Navigate to="/" />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/settings" element={user ? <Settings /> : <Navigate to="/" />} />
-        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/onboarding" element={user ? <Onboarding /> : <Navigate to="/" />} />
+          <Route path="/teacher/dashboard" element={user?.role === 'teacher' ? <TeacherDashboard /> : <Navigate to="/" />} />
+          <Route path="/teacher/courses" element={user?.role === 'teacher' ? <TeacherCourses /> : <Navigate to="/" />} />
+          <Route path="/teacher/students" element={user?.role === 'teacher' ? <TeacherStudents /> : <Navigate to="/" />} />
+          <Route path="/teacher/analytics" element={user?.role === 'teacher' ? <TeacherAnalytics /> : <Navigate to="/" />} />
+          <Route path="/student/dashboard" element={user?.role === 'student' ? <StudentDashboard /> : <Navigate to="/" />} />
+          <Route path="/course/:id" element={user ? <CourseDetail /> : <Navigate to="/" />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/settings" element={user ? <Settings /> : <Navigate to="/" />} />
+          <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }
