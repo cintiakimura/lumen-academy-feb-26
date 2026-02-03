@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
-export default function Header({ user, onMenuToggle, sidebarOpen }) {
-  const [logoPreview, setLogoPreview] = useState(() => {
-    const onboarding = localStorage.getItem('onboarding');
-    return onboarding ? JSON.parse(onboarding).branding?.logo : null;
-  });
-  const [companyName] = useState(() => {
-    const onboarding = localStorage.getItem('onboarding');
-    return onboarding ? JSON.parse(onboarding).company : 'LUMEN';
-  });
+export default function Header({ user, onMenuToggle, sidebarOpen, pageTitle = 'Dashboard' }) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -30,12 +22,11 @@ export default function Header({ user, onMenuToggle, sidebarOpen }) {
       borderBottom: '1px solid #333333',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
       padding: '0 24px',
       zIndex: 30
     }}>
-      {/* Left: Logo + Company Name */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', minWidth: '280px' }}>
+      {/* Left: Menu + Logo + Page Title */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
         <button
           onClick={onMenuToggle}
           style={{
@@ -49,45 +40,42 @@ export default function Header({ user, onMenuToggle, sidebarOpen }) {
         >
           ☰
         </button>
-        {logoPreview ? (
-          <img src={logoPreview} alt="Logo" style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '8px',
-            objectFit: 'cover'
-          }} />
-        ) : (
+        
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
+        }}>
           <div style={{
-            width: '48px',
-            height: '48px',
+            width: '40px',
+            height: '40px',
             background: 'rgba(0, 198, 0, 0.2)',
             borderRadius: '8px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             color: '#00c600',
-            fontSize: '12px'
+            fontSize: '11px',
+            fontWeight: '600'
           }}>
             L
           </div>
-        )}
-        <span className="accurat-thin" style={{
-          fontSize: '20px',
-          color: '#E0E0E0'
-        }}>
-          {companyName}
-        </span>
-      </div>
-
-      {/* Center: Page Title */}
-      <div style={{ flex: 1, textAlign: 'center' }}>
-        <h1 className="accurat-thin" style={{
-          fontSize: '32px',
-          color: '#00c600',
-          margin: 0
-        }}>
-          Dashboard
-        </h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '2px',
+              height: '32px',
+              background: '#00c600'
+            }} />
+            <h1 className="accurat-thin" style={{
+              fontSize: '24px',
+              color: '#00c600',
+              margin: 0,
+              fontWeight: '100'
+            }}>
+              {pageTitle}
+            </h1>
+          </div>
+        </div>
       </div>
 
       {/* Right: User Info + Logout */}
@@ -133,7 +121,8 @@ export default function Header({ user, onMenuToggle, sidebarOpen }) {
             padding: '6px 12px',
             fontSize: '12px',
             cursor: 'pointer',
-            transition: 'all 0.2s ease'
+            transition: 'all 0.2s ease',
+            fontWeight: '400'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = '#00c600';
