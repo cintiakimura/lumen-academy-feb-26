@@ -23,7 +23,6 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
-  const [courses, setCourses] = useState([]);
   const [progress, setProgress] = useState({});
   
   const user = authService.getCurrentUser();

@@ -20,12 +20,12 @@ import ProgressBar from '@/components/ui/ProgressBar';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
 import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function TeacherDashboard() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUploadForm, setShowUploadForm] = useState(false);
-  const [courses, setCourses] = useState([]);
   
   const user = authService.getCurrentUser();
   const students = storageService.getMockStudents();
@@ -40,8 +40,16 @@ export default function TeacherDashboard() {
     });
   }, [navigate]);
 
-  const handleCourseCreated = (newCourse) => {
-    setCourses(storageService.getCourses());
+  const { data: courses = [] } = useQuery({
+    queryKey: ['teacher-courses'],
+    queryFn: async () => {
+      const user = await base44.auth.me();
+      return await base44.entities.Course.filter({ teacher_id: user.id });
+    },
+    initialData: []
+  });
+
+  const handleCourseCreated = () => {
     setShowUploadForm(false);
   };
 
