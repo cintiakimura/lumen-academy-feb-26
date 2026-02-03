@@ -9,7 +9,7 @@ export default function Landing() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
-      <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50" style={{ opacity: '0.6' }}>
+      <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50" style={{ opacity: '0.4' }}>
         <div style={{ fontSize: '30px', color: '#00c600', fontWeight: '100' }}>
           LUMEN
         </div>
