@@ -48,7 +48,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center" style={{ height: '34vh', padding: '16px' }}>
+      <section className="relative flex items-center" style={{ height: '58vh', padding: '16px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
