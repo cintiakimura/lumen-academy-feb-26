@@ -24,43 +24,59 @@ import ChatBox from '@/components/ChatBox';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
 import certificateService from '@/components/services/certificateService';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function CourseDetail() {
   const navigate = useNavigate();
   const urlParams = new URLSearchParams(window.location.search);
   const courseId = urlParams.get('id');
   
-  const [course, setCourse] = useState(null);
-  const [progress, setProgress] = useState({ completedLessons: [], mastery: 0 });
   const [activeLesson, setActiveLesson] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [showCertificate, setShowCertificate] = useState(false);
   
-  const user = authService.getCurrentUser();
   const branding = storageService.getBranding();
 
   useEffect(() => {
     if (!authService.isAuthenticated()) {
       navigate(createPageUrl('Login'));
-      return;
     }
-    
-    const courses = storageService.getCourses();
-    const foundCourse = courses.find(c => c.id === courseId);
-    if (foundCourse) {
-      setCourse(foundCourse);
-      const userProgress = storageService.getProgress(user?.id)?.[courseId] || { completedLessons: [], mastery: 0 };
-      setProgress(userProgress);
-      
-      // Set first incomplete lesson as active
-      const firstIncomplete = foundCourse.lessons?.findIndex(
-        l => !userProgress.completedLessons?.includes(l.id)
+  }, [navigate]);
+
+  const { data: course } = useQuery({
+    queryKey: ['course', courseId],
+    queryFn: async () => {
+      const courses = await base44.entities.Course.list();
+      return courses.find(c => c.id === courseId);
+    },
+    enabled: !!courseId
+  });
+
+  const { data: progress = { completedLessons: [], mastery: 0 }, refetch: refetchProgress } = useQuery({
+    queryKey: ['progress', courseId],
+    queryFn: async () => {
+      const user = await base44.auth.me();
+      const allProgress = await base44.entities.StudentProgress.filter({
+        student_id: user.id,
+        course_id: courseId
+      });
+      return allProgress[0] || { completedLessons: [], mastery: 0 };
+    },
+    enabled: !!courseId,
+    initialData: { completedLessons: [], mastery: 0 }
+  });
+
+  useEffect(() => {
+    if (course?.lessons) {
+      const firstIncomplete = course.lessons.findIndex(
+        l => !progress.completedLessons?.includes(l.id)
       );
       if (firstIncomplete >= 0) {
-        setActiveLesson(foundCourse.lessons[firstIncomplete]);
+        setActiveLesson(course.lessons[firstIncomplete]);
       }
     }
-  }, [courseId, navigate, user?.id]);
+  }, [course, progress]);
 
   const handleLessonClick = (lesson, index) => {
     // Can only access completed lessons or the next one
@@ -73,26 +89,47 @@ export default function CourseDetail() {
     }
   };
 
-  const handleLessonComplete = (lessonId) => {
-    const newProgress = {
-      ...progress,
-      completedLessons: [...(progress.completedLessons || []), lessonId]
-    };
+  const handleLessonComplete = async (lessonId) => {
+    const user = await base44.auth.me();
+    const newCompletedLessons = [...(progress.completedLessons || []), lessonId];
     
-    // Check if course is complete
-    if (newProgress.completedLessons.length === course.lessons?.length) {
-      newProgress.certificate_earned = true;
+    const progressData = {
+      student_id: user.id,
+      course_id: courseId,
+      completed_lessons: newCompletedLessons,
+      mastery_score: progress.mastery || 0,
+      certificate_earned: newCompletedLessons.length === course?.lessons?.length
+    };
+
+    if (progress.id) {
+      await base44.entities.StudentProgress.update(progress.id, progressData);
+    } else {
+      await base44.entities.StudentProgress.create(progressData);
+    }
+    
+    if (progressData.certificate_earned) {
       setShowCertificate(true);
     }
     
-    setProgress(newProgress);
-    storageService.setProgress(user?.id, courseId, newProgress);
+    refetchProgress();
   };
 
-  const handleMasteryUpdate = (score) => {
-    const newProgress = { ...progress, mastery: score };
-    setProgress(newProgress);
-    storageService.setProgress(user?.id, courseId, newProgress);
+  const handleMasteryUpdate = async (score) => {
+    const user = await base44.auth.me();
+    const progressData = {
+      student_id: user.id,
+      course_id: courseId,
+      completed_lessons: progress.completedLessons || [],
+      mastery_score: score
+    };
+
+    if (progress.id) {
+      await base44.entities.StudentProgress.update(progress.id, progressData);
+    } else {
+      await base44.entities.StudentProgress.create(progressData);
+    }
+    
+    refetchProgress();
   };
 
   const handleNextLesson = () => {
@@ -240,26 +277,34 @@ export default function CourseDetail() {
                   {/* Content Placeholder based on format */}
                   <Card className="mb-6 overflow-hidden">
                     <CardContent className="p-0">
-                      {activeLesson.format === 'video' || activeLesson.format === 'podcast' ? (
-                        <div className="aspect-video bg-slate-900 flex items-center justify-center relative">
-                          <img 
-                            src={course.thumbnail}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover opacity-30"
-                          />
-                          <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="relative w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl"
-                          >
-                            <Play className="w-8 h-8 text-slate-800 ml-1" />
-                          </motion.button>
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-full h-1">
-                              <div className="bg-white h-full w-0 rounded-full" />
-                            </div>
-                          </div>
-                        </div>
+                      {activeLesson.format === 'video' ? (
+                       <div className="aspect-video bg-slate-900">
+                         <video 
+                           controls 
+                           className="w-full h-full"
+                           poster={course.thumbnail}
+                         >
+                           <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                           Your browser does not support the video tag.
+                         </video>
+                       </div>
+                      ) : activeLesson.format === 'audio' || activeLesson.format === 'podcast' ? (
+                       <div className="bg-slate-900 p-8">
+                         <div className="max-w-md mx-auto">
+                           <img 
+                             src={course.thumbnail}
+                             alt=""
+                             className="w-32 h-32 rounded-xl mx-auto mb-6 shadow-2xl"
+                           />
+                           <audio 
+                             controls 
+                             className="w-full"
+                           >
+                             <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+                             Your browser does not support the audio element.
+                           </audio>
+                         </div>
+                       </div>
                       ) : (
                         <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center p-8">
                           <div className="text-center">
@@ -371,11 +416,12 @@ export default function CourseDetail() {
               </p>
 
               <Button
-                onClick={() => {
+                onClick={async () => {
+                  const user = await base44.auth.me();
                   certificateService.generateCertificate(
                     course.title,
-                    user?.name || 'Student',
-                    progress.mastery || 85
+                    user?.full_name || 'Student',
+                    progress.mastery_score || 85
                   );
                 }}
                 className="w-full py-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold"

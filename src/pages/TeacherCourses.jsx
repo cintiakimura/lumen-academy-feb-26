@@ -24,26 +24,34 @@ import CourseCard from '@/components/CourseCard';
 import UploadForm from '@/components/UploadForm';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function TeacherCourses() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [search, setSearch] = useState('');
-  const [courses, setCourses] = useState([]);
   
   const branding = storageService.getBranding();
 
   useEffect(() => {
     if (!authService.isAuthenticated() || !authService.isTeacher()) {
       navigate(createPageUrl('Login'));
-      return;
     }
-    setCourses(storageService.getCourses());
   }, [navigate]);
 
+  const { data: courses = [], refetch } = useQuery({
+    queryKey: ['teacher-courses'],
+    queryFn: async () => {
+      const user = await base44.auth.me();
+      return await base44.entities.Course.filter({ teacher_id: user.id });
+    },
+    initialData: []
+  });
+
   const handleCourseCreated = () => {
-    setCourses(storageService.getCourses());
+    refetch();
     setShowUploadForm(false);
   };
 
