@@ -1,0 +1,113 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
+export default function Sidebar({ open, onToggle, isTeacher, isStudent }) {
+  const location = useLocation();
+
+  const teacherLinks = [
+    { label: 'Dashboard', icon: '📊', path: '/teacher/dashboard' },
+    { label: 'Courses', icon: '📚', path: '/teacher/courses' },
+    { label: 'Students', icon: '👥', path: '/teacher/students' },
+    { label: 'Analytics', icon: '📈', path: '/teacher/analytics' }
+  ];
+
+  const studentLinks = [
+    { label: 'Dashboard', icon: '🏠', path: '/student/dashboard' },
+    { label: 'Browse Courses', icon: '🔍', path: '/courses' },
+    { label: 'Profile', icon: '👤', path: '/profile' }
+  ];
+
+  const links = isTeacher ? teacherLinks : studentLinks;
+
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <>
+      {/* Sidebar */}
+      <div style={{
+        position: 'fixed',
+        left: 0,
+        top: '80px',
+        height: 'calc(100vh - 80px)',
+        width: open ? '280px' : '80px',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid #333333',
+        padding: open ? '24px 0' : '24px 0',
+        overflowY: 'auto',
+        transition: 'width 0.3s ease',
+        zIndex: 20,
+        borderRight: '1px solid #333333'
+      }}>
+        {links.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px 16px',
+              color: isActive(link.path) ? '#00c600' : '#E0E0E0',
+              textDecoration: 'none',
+              borderLeft: isActive(link.path) ? '3px solid #00c600' : '3px solid transparent',
+              transition: 'all 0.2s ease',
+              cursor: 'pointer',
+              marginBottom: '8px',
+              justifyContent: open ? 'flex-start' : 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(0, 198, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            <span style={{ fontSize: '18px' }}>{link.icon}</span>
+            {open && <span style={{ fontSize: '14px' }}>{link.label}</span>}
+          </Link>
+        ))}
+      </div>
+
+      {/* Mobile Bottom Nav */}
+      <div style={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '60px',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid #333333',
+        display: 'none',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        zIndex: 20,
+        '@media (max-width: 768px)': {
+          display: 'flex'
+        }
+      }}>
+        {links.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '4px',
+              color: isActive(link.path) ? '#00c600' : '#E0E0E0',
+              textDecoration: 'none',
+              fontSize: '12px',
+              flex: 1,
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '20px' }}>{link.icon}</span>
+            <span>{link.label}</span>
+          </Link>
+        ))}
+      </div>
+    </>
+  );
+}

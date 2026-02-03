@@ -1,172 +1,207 @@
-import React, { useEffect } from 'react';
-import storageService from '@/components/services/storageService';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import GrokChat from './components/GrokChat';
 
-export default function Layout({ children }) {
-  const branding = storageService.getBranding();
+export default function Layout({ children, currentPageName }) {
+  const [user, setUser] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [chatOpen, setChatOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const link = document.createElement('link');
-    link.href = 'https://fonts.cdnfonts.com/css/akkurat';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.body.style.fontFamily = 'Akkurat, system-ui, sans-serif';
-
-    return () => {
-      document.head.removeChild(link);
+    const checkAuth = async () => {
+      try {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+      }
     };
+    checkAuth();
   }, []);
 
+  useEffect(() => {
+    const savedChat = localStorage.getItem('grokChatOpen');
+    setChatOpen(savedChat === 'true');
+  }, []);
+
+  const toggleChat = () => {
+    const newState = !chatOpen;
+    setChatOpen(newState);
+    localStorage.setItem('grokChatOpen', newState);
+  };
+
+  // Check if current page should show sidebar
+  const showSidebar = user && !['/'].includes(location.pathname);
+  const isTeacher = user?.role === 'teacher';
+  const isStudent = user?.role === 'student';
+
   return (
-    <div style={{ fontFamily: 'Akkurat, system-ui, sans-serif' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#212121' }}>
       <style>{`
         @import url('https://fonts.cdnfonts.com/css/akkurat');
-        
-        :root {
-          --bg: #212121;
-          --text: #E0E0E0;
-          --text-muted: #4D4D4D;
-          --primary: #00c600;
-          --primary-hover: #00e600;
-          --glass-bg: rgba(255, 255, 255, 0.05);
-          --glass-border: #333333;
-          --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          --surface: #333333;
-          --surface-light: #4D4D4D;
-          --black: #000000;
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
-        
-        [data-theme="light"] {
-          --bg: #FFFFFF;
-          --text: #212121;
-          --text-muted: #4D4D4D;
-          --primary: #00c600;
-          --primary-hover: #00e600;
-          --glass-bg: rgba(0, 0, 0, 0.04);
-          --glass-border: #E0E0E0;
-          --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          --surface: #E0E0E0;
-          --surface-light: #FFFFFF;
-          --black: #000000;
-        }
-        
+
         body {
-          background: var(--bg);
-          color: var(--text);
-          font-family: 'Akkurat', system-ui, sans-serif;
-          transition: background 0.3s ease, color 0.3s ease;
+          font-family: 'Inter', 'Akkurat', system-ui, sans-serif;
+          background: #212121;
+          color: #E0E0E0;
         }
-        
+
+        .accurat-thin {
+          font-family: 'Akkurat', system-ui, sans-serif;
+          font-weight: 100;
+        }
+
+        .glass-bg {
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(12px);
+          border: 1px solid #333333;
+        }
+
         .glass-card {
-          background: var(--glass-bg);
-          backdrop-filter: blur(10px);
-          border: 1px solid var(--glass-border);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(12px);
+          border: 1px solid #333333;
           border-radius: 16px;
           padding: 24px;
         }
-        
-        [data-theme="dark"] .glass-card {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid #333333;
-        }
-        
-        [data-theme="light"] .glass-card {
-          background: rgba(0, 0, 0, 0.04);
-          border: 1px solid #E0E0E0;
-        }
-        
+
         .btn-primary {
-          height: 48px;
-          padding: 0 24px;
-          border-radius: 12px;
-          background: var(--primary);
+          background: #00c600;
           color: #000000;
-          font-weight: 600;
-          transition: all 0.2s ease;
           border: none;
+          border-radius: 12px;
+          padding: 12px 24px;
+          font-weight: 600;
           cursor: pointer;
+          transition: all 0.2s ease;
         }
-        
+
         .btn-primary:hover {
-          background: var(--primary-hover);
+          background: #00e600;
           transform: scale(1.03);
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
         }
-        
+
+        .btn-outline {
+          background: transparent;
+          color: #00c600;
+          border: 1px solid #00c600;
+          border-radius: 12px;
+          padding: 12px 24px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline:hover {
+          background: #00c600;
+          color: #000000;
+        }
+
         .progress-bar {
           height: 8px;
+          background: #333333;
           border-radius: 9999px;
-          background: var(--surface);
           overflow: hidden;
         }
-        
+
         .progress-fill {
           height: 100%;
-          background: var(--primary);
+          background: #00c600;
           transition: width 0.3s ease;
         }
-        
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        
-        .safe-area-pb {
-          padding-bottom: env(safe-area-inset-bottom, 0);
-        }
-        
-        h1, .text-headline { font-size: 32px; font-weight: 600; }
-        .text-body { font-size: 16px; font-weight: 400; }
-        .text-sub { font-size: 14px; font-weight: 400; }
-        
-        .section-spacing { padding: 24px 0; }
-        .card-spacing { margin: 16px 0; }
-        .hero-padding { padding: 32px; }
-        
-        .bottom-nav {
-          height: 64px;
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: var(--glass-bg);
-          backdrop-filter: blur(10px);
-          border-top: 1px solid var(--glass-border);
-        }
-        
-        .bottom-nav-icon {
-          width: 28px;
-          height: 28px;
-        }
-        
-        .bottom-nav-label {
-          font-size: 12px;
-        }
-        
-        .sidebar {
-          width: 280px;
-          background: var(--glass-bg);
-          backdrop-filter: blur(10px);
-          border-right: 1px solid var(--glass-border);
-        }
-        
-        .sidebar-header {
-          height: 80px;
-        }
-        
+
         @media (max-width: 768px) {
-          .sidebar {
-            width: 100%;
+          .hide-mobile {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hide-small {
+            display: none !important;
           }
         }
       `}</style>
-      {children}
+
+      {/* Header */}
+      {user && <Header user={user} onMenuToggle={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />}
+
+      <div style={{ display: 'flex', flex: 1, marginTop: user ? '80px' : 0 }}>
+        {/* Sidebar */}
+        {showSidebar && (
+          <Sidebar 
+            open={sidebarOpen} 
+            onToggle={() => setSidebarOpen(!sidebarOpen)}
+            isTeacher={isTeacher}
+            isStudent={isStudent}
+          />
+        )}
+
+        {/* Main Content */}
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          marginLeft: showSidebar && sidebarOpen ? '280px' : '0px',
+          transition: 'margin-left 0.3s ease',
+          padding: '24px',
+          maxWidth: '100%'
+        }}>
+          {children}
+        </div>
+      </div>
+
+      {/* Floating Chatbot */}
+      {user && (
+        <>
+          <button
+            onClick={toggleChat}
+            style={{
+              position: 'fixed',
+              bottom: '24px',
+              right: '24px',
+              width: '64px',
+              height: '64px',
+              background: '#00c600',
+              border: 'none',
+              borderRadius: '9999px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 40,
+              boxShadow: '0 4px 12px rgba(0, 198, 0, 0.3)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </button>
+
+          {/* Chat Panel */}
+          {chatOpen && (
+            <GrokChat 
+              user={user}
+              onClose={() => {
+                setChatOpen(false);
+                localStorage.setItem('grokChatOpen', 'false');
+              }}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }
