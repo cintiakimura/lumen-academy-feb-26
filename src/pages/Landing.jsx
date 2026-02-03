@@ -25,49 +25,8 @@ export default function Landing() {
     setIsSubmitting(true);
     
     try {
-      const nextFriday = getNextFridayAt2PM();
-      const endTime = new Date(nextFriday);
-      endTime.setHours(15, 0, 0, 0);
-
-      // Add to Google Calendar
-      const accessToken = await base44.asServiceRole.connectors.getAccessToken('googlecalendar');
+      const response = await base44.functions.invoke('bookWebinar', { name, email });
       
-      const event = {
-        summary: 'LUMEN Webinar',
-        description: `Join us for the LUMEN webinar. Attendee: ${name} (${email})`,
-        start: {
-          dateTime: nextFriday.toISOString(),
-          timeZone: 'Europe/Paris'
-        },
-        end: {
-          dateTime: endTime.toISOString(),
-          timeZone: 'Europe/Paris'
-        },
-        attendees: [{ email: email }]
-      };
-
-      await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(event)
-      });
-
-      // Send confirmation emails
-      await base44.integrations.Core.SendEmail({
-        to: email,
-        subject: 'Your LUMEN Webinar Booking Confirmed',
-        body: `Hi ${name},\n\nYour spot is confirmed for the LUMEN webinar on Friday at 2:00 PM CET.\n\nWe're excited to show you how personalized learning works!\n\nBest regards,\nLUMEN Team`
-      });
-
-      await base44.integrations.Core.SendEmail({
-        to: 'cintia@kgprotech.com',
-        subject: `New Webinar Registration: ${name}`,
-        body: `New attendee registered:\n\nName: ${name}\nEmail: ${email}\nTime: Friday 2:00 PM CET`
-      });
-
       setShowBooking(false);
       setName('');
       setEmail('');
