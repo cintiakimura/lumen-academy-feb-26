@@ -9,6 +9,19 @@ const stripLinks = (content) => {
     .trim();
 };
 
+const stripTrackers = (code) => {
+  if (!code) return '';
+  return code
+    .replace(/fbq\([^)]*\)/g, '')
+    .replace(/window\.clarity[^;]*/g, '')
+    .replace(/gtag\([^)]*\)/g, '')
+    .replace(/googletag[^;]*/g, '')
+    .replace(/navigator\.sendBeacon\([^)]*\)/g, '')
+    .replace(/fetch\([^)]*clarity[^)]*\)/g, '')
+    .replace(/fetch\([^)]*fbevents[^)]*\)/g, '')
+    .replace(/fetch\([^)]*collect[^)]*\)/g, '');
+};
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -24,7 +37,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Content and title required' }, { status: 400 });
     }
 
-    const cleanContent = stripLinks(content);
+    const cleanContent = stripLinks(stripTrackers(content));
 
     const result = await base44.integrations.Core.InvokeLLM({
       prompt: `You are an expert course designer for Lumen Academy, specializing in micro-learning for vocational training.
