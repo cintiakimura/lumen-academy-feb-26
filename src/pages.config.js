@@ -49,6 +49,7 @@
  */
 import CourseDetail from './pages/CourseDetail';
 import Courses from './pages/Courses';
+import Landing from './pages/Landing';
 import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
@@ -57,13 +58,13 @@ import TeacherAnalytics from './pages/TeacherAnalytics';
 import TeacherCourses from './pages/TeacherCourses';
 import TeacherDashboard from './pages/TeacherDashboard';
 import TeacherStudents from './pages/TeacherStudents';
-import Landing from './pages/Landing';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "CourseDetail": CourseDetail,
     "Courses": Courses,
+    "Landing": Landing,
     "Onboarding": Onboarding,
     "Profile": Profile,
     "Settings": Settings,
@@ -72,7 +73,6 @@ export const PAGES = {
     "TeacherCourses": TeacherCourses,
     "TeacherDashboard": TeacherDashboard,
     "TeacherStudents": TeacherStudents,
-    "Landing": Landing,
 }
 
 export const pagesConfig = {
