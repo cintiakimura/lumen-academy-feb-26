@@ -231,7 +231,92 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Booking Modal */}
+      {showBooking && (
+       <div style={{
+         position: 'fixed',
+         inset: 0,
+         background: 'rgba(0, 0, 0, 0.7)',
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center',
+         zIndex: 100
+       }} onClick={() => setShowBooking(false)}>
+         <div style={{
+           background: '#212121',
+           backdropFilter: 'blur(10px)',
+           border: '1px solid #333333',
+           borderRadius: '16px',
+           padding: '32px',
+           maxWidth: '400px',
+           width: '90%'
+         }} onClick={(e) => e.stopPropagation()}>
+           <h2 style={{ color: '#00c600', fontSize: '24px', marginBottom: '8px', fontWeight: '100' }}>
+             Next Available
+           </h2>
+           <p style={{ color: '#E0E0E0', fontSize: '18px', marginBottom: '32px', fontWeight: '100' }}>
+             Friday at 2:00 PM CET
+           </p>
 
-    </div>
-  );
-}
+           <form onSubmit={handleBooking} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+             <input
+               type="text"
+               placeholder="Your name"
+               value={name}
+               onChange={(e) => setName(e.target.value)}
+               required
+               style={{
+                 background: 'rgba(255, 255, 255, 0.05)',
+                 border: '1px solid #333333',
+                 borderRadius: '12px',
+                 padding: '12px 16px',
+                 color: '#E0E0E0',
+                 fontSize: '14px',
+                 fontFamily: 'inherit'
+               }}
+             />
+             <input
+               type="email"
+               placeholder="Your email"
+               value={email}
+               onChange={(e) => setEmail(e.target.value)}
+               required
+               style={{
+                 background: 'rgba(255, 255, 255, 0.05)',
+                 border: '1px solid #333333',
+                 borderRadius: '12px',
+                 padding: '12px 16px',
+                 color: '#E0E0E0',
+                 fontSize: '14px',
+                 fontFamily: 'inherit'
+               }}
+             />
+             <button
+               type="submit"
+               disabled={isSubmitting}
+               className="btn-primary"
+               style={{ marginTop: '8px', opacity: isSubmitting ? 0.7 : 1 }}
+             >
+               {isSubmitting ? 'Booking...' : 'Confirm Booking'}
+             </button>
+           </form>
+
+           <button
+             onClick={() => setShowBooking(false)}
+             style={{
+               background: 'transparent',
+               border: 'none',
+               color: '#4D4D4D',
+               cursor: 'pointer',
+               marginTop: '16px',
+               fontSize: '14px'
+             }}
+           >
+             Close
+           </button>
+         </div>
+       </div>
+      )}
+      </div>
+      );
+      }
