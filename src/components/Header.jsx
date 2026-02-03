@@ -91,7 +91,7 @@ export default function Header({ user, onMenuToggle, sidebarOpen }) {
       </div>
 
       {/* Right: User Info + Logout */}
-      <div style({ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <div style={{
           width: '40px',
           height: '40px',
