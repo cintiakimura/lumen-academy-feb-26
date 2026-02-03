@@ -349,7 +349,7 @@ export default function Onboarding() {
               Back
             </button>
           )}
-          {step < 3 ? (
+          {step < 4 ? (
             <button
               onClick={() => setStep(step + 1)}
               style={{
@@ -360,8 +360,7 @@ export default function Onboarding() {
                 padding: '12px',
                 color: '#000000',
                 cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600'
+                fontSize: '14px'
               }}
             >
               Next
@@ -377,8 +376,7 @@ export default function Onboarding() {
                 padding: '12px',
                 color: '#000000',
                 cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600'
+                fontSize: '14px'
               }}
             >
               Finish
