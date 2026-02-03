@@ -5,36 +5,40 @@ export default function Layout({ children }) {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    // Apply custom font
+    // Apply custom font - DM Sans (similar to Akkurat)
     const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${branding.font}:wght@400;500;600;700&display=swap`;
+    link.href = 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap';
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
-    // Apply font to body
-    document.body.style.fontFamily = `${branding.font}, system-ui, sans-serif`;
+    document.body.style.fontFamily = 'DM Sans, system-ui, sans-serif';
 
     return () => {
       document.head.removeChild(link);
     };
-  }, [branding.font]);
+  }, []);
 
   return (
-    <div style={{ fontFamily: `Montserrat, ${branding.font}, system-ui, sans-serif` }}>
+    <div style={{ fontFamily: 'DM Sans, system-ui, sans-serif' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
         
         :root {
-          --primary: #2A5D9A;
-          --accent: #C9A96E;
-          --bg: #FAFAFA;
+          --primary: #00D100;
+          --primary-dark: #00B800;
+          --accent: #00D100;
+          --bg: #FFFFFF;
+          --bg-secondary: #F5F5F5;
           --text: #1A1A1A;
-          --primary-color: ${branding.primaryColor};
+          --text-secondary: #8B8B8B;
+          --border: #E0E0E0;
+          --surface: #2D2D2D;
         }
         
         body {
           background-color: var(--bg);
           color: var(--text);
+          font-family: 'DM Sans', system-ui, sans-serif;
         }
         
         .scrollbar-hide::-webkit-scrollbar {
