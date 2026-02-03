@@ -157,21 +157,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 style={{ fontSize: '32px', color: '#00c600', marginBottom: '32px', fontWeight: '100' }}>
-            Because one method doesn't fit everyone
-          </h2>
-          <button 
-            onClick={handleLogin}
-            className="btn-primary uppercase tracking-wider"
-            style={{ fontSize: '18px' }}
-          >
-            Get Started
-          </button>
-        </div>
-      </section>
+
     </div>
   );
 }
