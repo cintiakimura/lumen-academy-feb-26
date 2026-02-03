@@ -122,36 +122,28 @@ export default function Landing() {
             Cutting-edge AI meets neuroscience research — every moment designed to fit your unique learning profile
           </p>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8 text-left">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-[#1A1A1A] font-bold text-xl">AI</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-medium text-white mb-2">Smart Content Engine</h3>
-                  <p className="text-[#8B8B8B]">
-                    Transforms any content into bite-sized, engaging lessons optimized for retention
-                  </p>
-                </div>
+          <div className="space-y-8 text-left max-w-2xl mx-auto">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] font-bold text-xl">AI</span>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-[#1A1A1A] font-bold text-xl">🧠</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-medium text-white mb-2">Adaptive Platform</h3>
-                  <p className="text-[#8B8B8B]">
-                    Monitors your progress and adjusts in real-time based on neuroscience principles
-                  </p>
-                </div>
+              <div>
+                <h3 className="text-xl font-medium text-white mb-2">Smart Content Engine</h3>
+                <p className="text-[#8B8B8B]">
+                  Transforms any content into bite-sized, engaging lessons optimized for retention
+                </p>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-[#00D100]/20 to-transparent rounded-2xl flex items-center justify-center">
-                <div className="text-[#00D100] text-8xl">📱</div>
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] font-bold text-xl">🧠</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium text-white mb-2">Adaptive Platform</h3>
+                <p className="text-[#8B8B8B]">
+                  Monitors your progress and adjusts in real-time based on neuroscience principles
+                </p>
               </div>
             </div>
           </div>
