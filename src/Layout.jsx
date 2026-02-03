@@ -20,13 +20,23 @@ export default function Layout({ children }) {
   }, [branding.font]);
 
   return (
-    <div style={{ fontFamily: `${branding.font}, system-ui, sans-serif` }}>
+    <div style={{ fontFamily: `Montserrat, ${branding.font}, system-ui, sans-serif` }}>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        
         :root {
+          --primary: #2A5D9A;
+          --accent: #C9A96E;
+          --bg: #FAFAFA;
+          --text: #1A1A1A;
           --primary-color: ${branding.primaryColor};
         }
         
-        /* Custom scrollbar */
+        body {
+          background-color: var(--bg);
+          color: var(--text);
+        }
+        
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }
@@ -35,7 +45,6 @@ export default function Layout({ children }) {
           scrollbar-width: none;
         }
         
-        /* Safe area for mobile */
         .safe-area-pb {
           padding-bottom: env(safe-area-inset-bottom, 0);
         }

@@ -37,10 +37,10 @@ export default function CourseCard({
   if (variant === 'compact') {
     return (
       <motion.div
-        whileHover={{ y: -2 }}
+        whileHover={{ scale: 1.02 }}
         onClick={onClick}
         className={cn(
-          'bg-white rounded-xl p-4 shadow-sm border border-slate-100 cursor-pointer transition-shadow hover:shadow-md',
+          'bg-white rounded-xl p-4 shadow-md border border-[var(--primary)] border-opacity-20 cursor-pointer transition-all hover:shadow-lg',
           className
         )}
       >
@@ -63,10 +63,10 @@ export default function CourseCard({
 
   return (
     <motion.div
-      whileHover={{ y: -4, boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)' }}
+      whileHover={{ scale: 1.05 }}
       onClick={onClick}
       className={cn(
-        'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer transition-all duration-300',
+        'bg-white rounded-xl overflow-hidden shadow-md border border-[var(--primary)] border-opacity-20 cursor-pointer transition-all duration-300',
         className
       )}
     >

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mic, MicOff, Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mic, MicOff, Loader2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -11,6 +11,8 @@ export default function VoiceButton({
 }) {
   const [isListening, setIsListening] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
+  const recognitionRef = useRef(null);
 
   const sizeClasses = {
     sm: 'w-10 h-10',
@@ -24,29 +26,84 @@ export default function VoiceButton({
     lg: 'w-7 h-7'
   };
 
+  useEffect(() => {
+    // Initialize Web Speech API
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
+    if (!SpeechRecognition) {
+      setError('Voice input not supported in this browser');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setIsProcessing(true);
+      setIsListening(false);
+      
+      setTimeout(() => {
+        setIsProcessing(false);
+        if (onTranscript && transcript) {
+          onTranscript(transcript);
+        }
+      }, 300);
+    };
+
+    recognition.onerror = (event) => {
+      setIsListening(false);
+      setIsProcessing(false);
+      if (event.error === 'not-allowed') {
+        setError('Microphone access denied');
+      } else if (event.error === 'no-speech') {
+        setError('No speech detected');
+      } else {
+        setError('Voice input failed');
+      }
+      setTimeout(() => setError(null), 3000);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognitionRef.current = recognition;
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, [onTranscript]);
+
   const handleClick = () => {
-    if (disabled || isProcessing) return;
+    if (disabled || isProcessing || error) return;
     
     if (!isListening) {
-      // Start listening (mock - in real app, use Web Speech API)
-      setIsListening(true);
-      
-      // Mock: stop after 3 seconds and return mock transcript
-      setTimeout(() => {
-        setIsListening(false);
-        setIsProcessing(true);
-        
-        setTimeout(() => {
-          setIsProcessing(false);
-          if (onTranscript) {
-            onTranscript("I think the brake pads need to be replaced when they're worn down to about 3mm thickness.");
-          }
-        }, 1000);
-      }, 3000);
+      try {
+        recognitionRef.current?.start();
+        setIsListening(true);
+      } catch (err) {
+        setError('Failed to start voice input');
+        setTimeout(() => setError(null), 3000);
+      }
     } else {
+      recognitionRef.current?.stop();
       setIsListening(false);
     }
   };
+
+  if (error) {
+    return (
+      <div className="flex items-center gap-2 text-xs text-red-600">
+        <AlertCircle className="w-4 h-4" />
+        <span>{error}</span>
+      </div>
+    );
+  }
 
   return (
     <motion.button
@@ -54,12 +111,13 @@ export default function VoiceButton({
       whileTap={{ scale: disabled ? 1 : 0.95 }}
       onClick={handleClick}
       disabled={disabled}
+      title={isListening ? 'Stop recording' : 'Start voice input'}
       className={cn(
-        'relative rounded-full flex items-center justify-center transition-all duration-300 shadow-lg',
+        'relative rounded-full flex items-center justify-center transition-all duration-300',
         sizeClasses[size],
         isListening 
-          ? 'bg-red-500 hover:bg-red-600' 
-          : 'bg-blue-500 hover:bg-blue-600',
+          ? 'bg-red-50 border-2 border-red-500' 
+          : 'bg-white border-2 border-[var(--primary)] hover:bg-[var(--primary)]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
@@ -72,7 +130,7 @@ export default function VoiceButton({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
           >
-            <Loader2 className={cn('text-white animate-spin', iconSizes[size])} />
+            <Loader2 className={cn('animate-spin text-[var(--primary)]', iconSizes[size])} />
           </motion.div>
         ) : isListening ? (
           <motion.div
@@ -81,7 +139,7 @@ export default function VoiceButton({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
           >
-            <MicOff className={cn('text-white', iconSizes[size])} />
+            <Mic className={cn('text-red-500', iconSizes[size])} />
           </motion.div>
         ) : (
           <motion.div
@@ -89,26 +147,26 @@ export default function VoiceButton({
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
+            className="group-hover:text-white"
           >
-            <Mic className={cn('text-white', iconSizes[size])} />
+            <Mic className={cn('text-[var(--primary)] transition-colors', iconSizes[size])} />
           </motion.div>
         )}
       </AnimatePresence>
       
-      {/* Pulse animation when listening */}
       {isListening && (
         <>
           <motion.span
-            className="absolute inset-0 rounded-full bg-red-500"
-            initial={{ opacity: 0.5, scale: 1 }}
-            animate={{ opacity: 0, scale: 1.5 }}
-            transition={{ duration: 1, repeat: Infinity }}
+            className="absolute inset-0 rounded-full border-2 border-red-500"
+            initial={{ opacity: 0.6, scale: 1 }}
+            animate={{ opacity: 0, scale: 1.6 }}
+            transition={{ duration: 1.5, repeat: Infinity }}
           />
           <motion.span
-            className="absolute inset-0 rounded-full bg-red-500"
-            initial={{ opacity: 0.5, scale: 1 }}
-            animate={{ opacity: 0, scale: 1.5 }}
-            transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
+            className="absolute inset-0 rounded-full border-2 border-red-400"
+            initial={{ opacity: 0.4, scale: 1 }}
+            animate={{ opacity: 0, scale: 1.4 }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
           />
         </>
       )}

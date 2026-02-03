@@ -35,10 +35,8 @@ export default function ProgressBar({
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className={cn(
-            'h-full rounded-full',
-            percentage >= 85 ? 'bg-emerald-500' : 
-            percentage >= 50 ? 'bg-blue-500' : 
-            'bg-amber-500'
+            'h-full rounded-full transition-all duration-500',
+            'bg-[var(--primary)]'
           )}
           style={color ? { backgroundColor: color } : {}}
         />

@@ -121,24 +121,22 @@ export default function ChatBox({
   };
 
   return (
-    <div className={cn('flex flex-col h-full bg-slate-50 rounded-2xl overflow-hidden', className)}>
+    <div className={cn('flex flex-col h-full bg-white rounded-xl overflow-hidden border border-[var(--primary)] border-opacity-20', className)}>
       {/* Header */}
-      <div className="px-5 py-4 bg-white border-b border-slate-100">
+      <div className="px-5 py-4 bg-white border-b border-[var(--primary)] border-opacity-20">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 border border-[var(--primary)] rounded-xl flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-[var(--accent)]" />
           </div>
           <div>
-            <h3 className="font-semibold text-slate-800">Grok Tutor</h3>
-            <p className="text-xs text-slate-500">Powered by xAI</p>
+            <h3 className="font-semibold text-[var(--text)]">Grok Tutor</h3>
+            <p className="text-xs text-[var(--text)] opacity-60">Powered by xAI</p>
           </div>
           {masteryScore > 0 && (
             <div className="ml-auto">
               <div className={cn(
-                'px-3 py-1 rounded-full text-xs font-semibold',
-                masteryScore >= 85 ? 'bg-emerald-100 text-emerald-700' :
-                masteryScore >= 50 ? 'bg-amber-100 text-amber-700' :
-                'bg-slate-100 text-slate-600'
+                'px-3 py-1 rounded-full text-xs font-semibold border',
+                'border-[var(--primary)] text-[var(--primary)] bg-[var(--primary)] bg-opacity-10'
               )}>
                 {Math.round(masteryScore)}% mastery
               </div>
@@ -175,16 +173,21 @@ export default function ChatBox({
                   <Bot className={cn('w-4 h-4', message.isSuccess ? 'text-white' : 'text-slate-600')} />
                 )}
               </div>
-              <div className={cn(
-                'max-w-[80%] rounded-2xl px-4 py-3',
-                message.role === 'user' 
-                  ? 'bg-blue-500 text-white rounded-tr-sm' 
-                  : message.isSuccess
-                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-tl-sm'
-                    : 'bg-white text-slate-700 shadow-sm rounded-tl-sm'
-              )}>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className={cn(
+                  'max-w-[80%] rounded-2xl px-4 py-3',
+                  message.role === 'user' 
+                    ? 'bg-[var(--primary)] text-white rounded-tr-sm' 
+                    : message.isSuccess
+                      ? 'border border-[var(--accent)] text-[var(--text)] bg-[var(--accent)] bg-opacity-10 rounded-tl-sm'
+                      : 'bg-white text-[var(--text)] shadow-md border border-[var(--primary)] border-opacity-20 rounded-tl-sm'
+                )}
+              >
                 <p className="text-sm leading-relaxed">{message.content}</p>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -221,7 +224,7 @@ export default function ChatBox({
           >
             <Button 
               onClick={onComplete}
-              className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3"
+              className="w-full border-2 border-[var(--accent)] bg-white text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white font-semibold py-3 transition-all"
             >
               <Sparkles className="w-4 h-4 mr-2" />
               Continue to Next Lesson
@@ -249,7 +252,7 @@ export default function ChatBox({
               onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-blue-500 hover:bg-blue-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg border border-[var(--primary)] bg-white hover:bg-[var(--primary)] text-[var(--primary)] hover:text-white transition-all"
             >
               <Send className="w-4 h-4" />
             </Button>

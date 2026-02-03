@@ -68,26 +68,25 @@ export default function TeacherSidebar({ isOpen, onToggle }) {
         initial={false}
         animate={{ x: isOpen ? 0 : -280 }}
         className={cn(
-          'fixed top-0 left-0 h-full w-64 bg-white border-r border-slate-100 z-40 flex flex-col',
+          'fixed top-0 left-0 h-full w-64 bg-white border-r border-[var(--primary)] border-opacity-20 z-40 flex flex-col',
           'lg:translate-x-0 lg:static'
         )}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-slate-100">
+        <div className="p-6 border-b border-[var(--primary)] border-opacity-20">
           <div className="flex items-center gap-3">
             {branding.logo ? (
               <img src={branding.logo} alt="Logo" className="w-10 h-10 rounded-xl object-cover" />
             ) : (
               <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: branding.primaryColor }}
+                className="w-10 h-10 rounded-xl border border-[var(--primary)] flex items-center justify-center"
               >
-                <BookOpen className="w-5 h-5 text-white" />
+                <BookOpen className="w-5 h-5 text-[var(--primary)]" />
               </div>
             )}
             <div>
-              <h1 className="font-bold text-slate-800">Lumen Academy</h1>
-              <p className="text-xs text-slate-500">Teacher Portal</p>
+              <h1 className="font-semibold text-[var(--text)]">Lumen Academy</h1>
+              <p className="text-xs text-[var(--text)] opacity-60">Teacher Portal</p>
             </div>
           </div>
         </div>
@@ -101,13 +100,13 @@ export default function TeacherSidebar({ isOpen, onToggle }) {
               onClick={() => window.innerWidth < 1024 && onToggle()}
             >
               <motion.div
-                whileHover={{ x: 4 }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-xl transition-colors',
+                  'flex items-center gap-3 px-4 py-3 rounded-xl transition-all',
                   isActive(item.page)
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-600 hover:bg-slate-50'
+                    ? 'border border-[var(--primary)] bg-[var(--primary)] bg-opacity-5 text-[var(--primary)]'
+                    : 'text-[var(--text)] opacity-70 hover:opacity-100'
                 )}
               >
                 <item.icon className="w-5 h-5" />
