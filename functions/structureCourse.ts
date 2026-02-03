@@ -1,5 +1,14 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
+const stripLinks = (content) => {
+  if (!content) return '';
+  return content
+    .replace(/https?:\/\/[^\s]+/g, '')
+    .replace(/www\.[^\s]+/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .trim();
+};
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -9,13 +18,14 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { content, title, category } = await req.json();
+    const { content, title } = await req.json();
 
     if (!content || !title) {
       return Response.json({ error: 'Content and title required' }, { status: 400 });
     }
 
-    // Call Grok AI to structure the course
+    const cleanContent = stripLinks(content);
+
     const result = await base44.integrations.Core.InvokeLLM({
       prompt: `You are an expert course designer for Lumen Academy, specializing in micro-learning for vocational training.
 
@@ -27,10 +37,9 @@ Transform the following content into a structured course using these guidelines:
 - Focus on practical skills and real-world application
 
 Course Title: ${title}
-Category: ${category || 'general'}
 
 Content:
-${content}
+${cleanContent}
 
 Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 {
