@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import VoiceButton from './ui/VoiceButton';
-import grokService from './services/grokService';
+import { base44 } from '@/api/base44Client';
 
 export default function ChatBox({ 
   lessonContent,
@@ -55,28 +55,30 @@ export default function ChatBox({
     setIsLoading(true);
 
     try {
-      const response = await grokService.chatWithStudent(
+      const response = await base44.functions.invoke('chatWithGrok', {
         lessonContent,
-        messages.map(m => ({ role: m.role, content: m.content })),
-        text.trim()
-      );
+        messageHistory: messages.map(m => ({ role: m.role, content: m.content })),
+        userMessage: text.trim()
+      });
+
+      const result = response.data;
 
       const assistantMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response.response,
+        content: result.response,
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
       
       // Update mastery score
-      if (response.mastery_score) {
-        setMasteryScore(response.mastery_score);
-        onMasteryUpdate?.(response.mastery_score);
+      if (result.mastery_score) {
+        setMasteryScore(result.mastery_score);
+        onMasteryUpdate?.(result.mastery_score);
 
         // Check if mastery achieved
-        if (response.mastery_score >= 85 && !showCelebration) {
+        if (result.mastery_score >= 85 && !showCelebration) {
           setShowCelebration(true);
           setTimeout(() => {
             setMessages(prev => [...prev, {
@@ -90,16 +92,16 @@ export default function ChatBox({
         }
       }
 
-      // Handle frustration
-      if (response.is_frustrated) {
+      // Handle frustration - show shorter supportive message
+      if (result.is_frustrated) {
         setTimeout(() => {
           setMessages(prev => [...prev, {
             id: (Date.now() + 3).toString(),
             role: 'assistant',
-            content: "No rush at all! Learning takes time, and you're doing great. Want to take a break and come back tomorrow fresh? Sometimes that's the best way to let things sink in. 💪",
+            content: "Let's take it slow. No rush at all — you're doing great! 💙",
             timestamp: new Date()
           }]);
-        }, 1000);
+        }, 800);
       }
 
     } catch (error) {
