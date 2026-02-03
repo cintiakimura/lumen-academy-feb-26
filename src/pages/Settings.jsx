@@ -74,32 +74,32 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-100 px-6 py-4">
+    <div className="min-h-screen bg-[#212121]">
+      <header className="sticky top-0 z-30 glass-card border-b border-[#333333] px-6 py-4">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={goBack}>
+          <Button variant="ghost" size="icon" onClick={goBack} className="text-[#e0e0e0] hover:bg-[#333333]">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-xl font-bold text-slate-800">Settings</h1>
+          <h1 className="text-xl font-bold text-[#e0e0e0]">Settings</h1>
         </div>
       </header>
 
       <div className="p-6 max-w-2xl mx-auto space-y-6">
         {/* Branding Card */}
-        <Card>
+        <Card className="glass-card border border-[#333333]">
           <CardHeader>
-            <CardTitle>Branding</CardTitle>
+            <CardTitle className="text-[#e0e0e0]">Branding</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Logo */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
+              <label className="block text-sm font-medium text-[#e0e0e0] mb-3">
                 <Upload className="w-4 h-4 inline mr-2" />
                 Logo
               </label>
               <div 
                 onClick={() => document.getElementById('logoInput').click()}
-                className="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                className="border-2 border-dashed border-[#333333] rounded-2xl p-6 text-center cursor-pointer hover:border-[#00c600] transition-colors"
               >
                 <input
                   id="logoInput"
@@ -116,8 +116,8 @@ export default function Settings() {
                   />
                 ) : (
                   <>
-                    <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm text-slate-500">Click to upload</p>
+                    <Upload className="w-8 h-8 text-[#a0a0a0] mx-auto mb-2" />
+                    <p className="text-sm text-[#a0a0a0]">Click to upload</p>
                   </>
                 )}
               </div>
@@ -125,7 +125,7 @@ export default function Settings() {
 
             {/* Color */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
+              <label className="block text-sm font-medium text-[#e0e0e0] mb-3">
                 <Palette className="w-4 h-4 inline mr-2" />
                 Primary Color
               </label>
@@ -149,7 +149,7 @@ export default function Settings() {
 
             {/* Font */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-3">
+              <label className="block text-sm font-medium text-[#e0e0e0] mb-3">
                 <Type className="w-4 h-4 inline mr-2" />
                 Font Family
               </label>
@@ -160,13 +160,13 @@ export default function Settings() {
                     onClick={() => setBranding(prev => ({ ...prev, font: font.value }))}
                     className={`p-4 rounded-xl border-2 transition-all ${
                       branding.font === font.value 
-                        ? 'border-blue-500 bg-blue-50' 
-                        : 'border-slate-200 hover:border-slate-300'
+                        ? 'border-[#00c600] bg-[#00c600]/20' 
+                        : 'border-[#333333] hover:border-[#00c600]'
                     }`}
                     style={{ fontFamily: font.value }}
                   >
-                    <span className="text-lg font-medium text-slate-800">Aa</span>
-                    <p className="text-xs text-slate-500 mt-1">{font.name}</p>
+                    <span className="text-lg font-medium text-[#e0e0e0]">Aa</span>
+                    <p className="text-xs text-[#a0a0a0] mt-1">{font.name}</p>
                   </button>
                 ))}
               </div>
@@ -175,9 +175,9 @@ export default function Settings() {
         </Card>
 
         {/* Preview */}
-        <Card>
+        <Card className="glass-card border border-[#333333]">
           <CardHeader>
-            <CardTitle>Preview</CardTitle>
+            <CardTitle className="text-[#e0e0e0]">Preview</CardTitle>
           </CardHeader>
           <CardContent>
             <div 
@@ -201,8 +201,7 @@ export default function Settings() {
         {/* Save Button */}
         <Button
           onClick={handleSave}
-          className="w-full py-6 text-white font-semibold"
-          style={{ backgroundColor: branding.primaryColor }}
+          className="w-full py-6 bg-[#00c600] hover:bg-[#00e600] text-[#212121] font-semibold"
         >
           {saved ? (
             <>

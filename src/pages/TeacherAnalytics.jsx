@@ -89,15 +89,15 @@ export default function TeacherAnalytics() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 lg:flex">
+    <div className="min-h-screen bg-[#212121] lg:flex">
       <TeacherSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
       <main className="flex-1">
-        <header className="bg-white border-b border-slate-100 px-6 py-4 lg:px-8">
+        <header className="glass-card border-b border-[#333333] px-6 py-4 lg:px-8">
           <div className="lg:hidden" />
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Analytics</h1>
-            <p className="text-sm text-slate-500">Track student progress and course performance</p>
+            <h1 className="text-2xl font-bold text-[#e0e0e0]">Analytics</h1>
+            <p className="text-sm text-[#a0a0a0]">Track student progress and course performance</p>
           </div>
         </header>
 
@@ -111,24 +111,23 @@ export default function TeacherAnalytics() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card>
+                <Card className="glass-card border border-[#333333]">
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div 
-                        className="w-10 h-10 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: `${branding.primaryColor}20` }}
+                        className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#00c600]/20"
                       >
-                        <stat.icon className="w-5 h-5" style={{ color: branding.primaryColor }} />
+                        <stat.icon className="w-5 h-5 text-[#00c600]" />
                       </div>
                       <div className={`flex items-center gap-1 text-xs font-medium ${
-                        stat.trend === 'up' ? 'text-emerald-600' : 'text-red-500'
+                        stat.trend === 'up' ? 'text-[#00c600]' : 'text-red-400'
                       }`}>
                         {stat.trend === 'up' ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
                         {stat.change}
                       </div>
                     </div>
-                    <p className="text-2xl font-bold text-slate-800">{stat.value}</p>
-                    <p className="text-sm text-slate-500">{stat.title}</p>
+                    <p className="text-2xl font-bold text-[#e0e0e0]">{stat.value}</p>
+                    <p className="text-sm text-[#a0a0a0]">{stat.title}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -138,9 +137,9 @@ export default function TeacherAnalytics() {
           {/* Charts Row */}
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Weekly Activity */}
-            <Card>
+            <Card className="glass-card border border-[#333333]">
               <CardHeader>
-                <CardTitle className="text-lg">Weekly Activity</CardTitle>
+                <CardTitle className="text-lg text-[#e0e0e0]">Weekly Activity</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="h-64">
@@ -164,9 +163,9 @@ export default function TeacherAnalytics() {
             </Card>
 
             {/* Mastery Distribution */}
-            <Card>
+            <Card className="glass-card border border-[#333333]">
               <CardHeader>
-                <CardTitle className="text-lg">Mastery Distribution</CardTitle>
+                <CardTitle className="text-lg text-[#e0e0e0]">Mastery Distribution</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="h-64 flex items-center">
@@ -206,9 +205,9 @@ export default function TeacherAnalytics() {
           </div>
 
           {/* Course Completion */}
-          <Card>
+          <Card className="glass-card border border-[#333333]">
             <CardHeader>
-              <CardTitle className="text-lg">Course Completion Rates</CardTitle>
+              <CardTitle className="text-lg text-[#e0e0e0]">Course Completion Rates</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -220,11 +219,11 @@ export default function TeacherAnalytics() {
                     transition={{ delay: index * 0.1 }}
                     className="flex items-center gap-4"
                   >
-                    <span className="w-32 text-sm text-slate-700 truncate">{course.name}</span>
+                    <span className="w-32 text-sm text-[#e0e0e0] truncate">{course.name}</span>
                     <div className="flex-1">
-                      <ProgressBar value={course.completion} showLabel={false} />
+                      <ProgressBar value={course.completion} showLabel={false} color="#00c600" />
                     </div>
-                    <span className="text-sm font-semibold text-slate-700 w-12 text-right">
+                    <span className="text-sm font-semibold text-[#e0e0e0] w-12 text-right">
                       {course.completion}%
                     </span>
                   </motion.div>
@@ -234,30 +233,30 @@ export default function TeacherAnalytics() {
           </Card>
 
           {/* Top Performers */}
-          <Card>
+          <Card className="glass-card border border-[#333333]">
             <CardHeader>
-              <CardTitle className="text-lg">Top Performing Students</CardTitle>
+              <CardTitle className="text-lg text-[#e0e0e0]">Top Performing Students</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="divide-y divide-slate-100">
+              <div className="divide-y divide-[#333333]">
                 {students.slice(0, 5).map((student, index) => {
                   const progress = studentProgress.find(p => p.studentId === student.id);
                   return (
                     <div key={student.id} className="flex items-center gap-4 py-3">
-                      <span className="text-lg font-bold text-slate-300 w-6">#{index + 1}</span>
+                      <span className="text-lg font-bold text-[#a0a0a0] w-6">#{index + 1}</span>
                       <img 
                         src={student.avatar} 
                         alt={student.name}
                         className="w-10 h-10 rounded-full"
                       />
                       <div className="flex-1">
-                        <p className="font-medium text-slate-800">{student.name}</p>
-                        <p className="text-sm text-slate-500">{student.email}</p>
+                        <p className="font-medium text-[#e0e0e0]">{student.name}</p>
+                        <p className="text-sm text-[#a0a0a0]">{student.email}</p>
                       </div>
                       <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
                         (progress?.mastery || 0) >= 85 
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : 'bg-blue-100 text-blue-700'
+                          ? 'bg-[#00c600] text-[#212121]'
+                          : 'bg-[#00c600]/50 text-[#e0e0e0]'
                       }`}>
                         {progress?.mastery || 0}% mastery
                       </div>

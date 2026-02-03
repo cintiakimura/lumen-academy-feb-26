@@ -68,11 +68,10 @@ export default function Profile() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
+    <div className="min-h-screen bg-[#212121] pb-20">
       {/* Header */}
       <div 
-        className="px-6 pt-12 pb-24 rounded-b-3xl"
-        style={{ background: `linear-gradient(135deg, ${branding.primaryColor}, ${branding.primaryColor}dd)` }}
+        className="px-6 pt-12 pb-24 rounded-b-3xl bg-gradient-to-br from-[#00c600] to-[#00a600]"
       >
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-xl font-bold text-white">Profile</h1>
@@ -110,9 +109,9 @@ export default function Profile() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="shadow-lg">
+          <Card className="glass-card border border-[#333333]">
             <CardContent className="p-0">
-              <div className="grid grid-cols-3 divide-x divide-slate-100">
+              <div className="grid grid-cols-3 divide-x divide-[#333333]">
                 {[
                   { icon: Award, value: completedCourses, label: 'Certificates' },
                   { icon: BookOpen, value: totalLessonsCompleted, label: 'Lessons' },
@@ -120,11 +119,10 @@ export default function Profile() {
                 ].map((stat, index) => (
                   <div key={stat.label} className="p-5 text-center">
                     <stat.icon 
-                      className="w-6 h-6 mx-auto mb-2"
-                      style={{ color: branding.primaryColor }}
+                      className="w-6 h-6 mx-auto mb-2 text-[#00c600]"
                     />
-                    <p className="text-xl font-bold text-slate-800">{stat.value}</p>
-                    <p className="text-xs text-slate-500">{stat.label}</p>
+                    <p className="text-xl font-bold text-[#e0e0e0]">{stat.value}</p>
+                    <p className="text-xs text-[#a0a0a0]">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -138,8 +136,8 @@ export default function Profile() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h3 className="text-lg font-bold text-slate-800 mb-3">Achievements</h3>
-          <Card>
+          <h3 className="text-lg font-bold text-[#e0e0e0] mb-3">Achievements</h3>
+          <Card className="glass-card border border-[#333333]">
             <CardContent className="p-4">
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
                 {[
@@ -152,11 +150,11 @@ export default function Profile() {
                   <div 
                     key={achievement.label}
                     className={`flex-shrink-0 w-20 text-center p-3 rounded-xl ${
-                      achievement.earned ? 'bg-amber-50' : 'bg-slate-50 opacity-50'
+                      achievement.earned ? 'bg-[#00c600]/20 border border-[#00c600]' : 'bg-[#333333] opacity-50'
                     }`}
                   >
                     <span className="text-2xl">{achievement.emoji}</span>
-                    <p className="text-xs text-slate-600 mt-1">{achievement.label}</p>
+                    <p className="text-xs text-[#a0a0a0] mt-1">{achievement.label}</p>
                   </div>
                 ))}
               </div>
@@ -170,29 +168,28 @@ export default function Profile() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-lg font-bold text-slate-800 mb-3">Settings</h3>
-          <Card>
-            <CardContent className="p-0 divide-y divide-slate-100">
+          <h3 className="text-lg font-bold text-[#e0e0e0] mb-3">Settings</h3>
+          <Card className="glass-card border border-[#333333]">
+            <CardContent className="p-0 divide-y divide-[#333333]">
               {menuItems.map((item) => (
                 <button 
                   key={item.label}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+                  className="w-full flex items-center gap-4 p-4 hover:bg-[#333333] transition-colors"
                 >
-                  <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
-                    <item.icon className="w-5 h-5 text-slate-600" />
+                  <div className="w-10 h-10 bg-[#333333] rounded-xl flex items-center justify-center">
+                    <item.icon className="w-5 h-5 text-[#a0a0a0]" />
                   </div>
-                  <span className="flex-1 text-left font-medium text-slate-700">
+                  <span className="flex-1 text-left font-medium text-[#e0e0e0]">
                     {item.label}
                   </span>
                   {item.badge ? (
                     <span 
-                      className="px-2 py-0.5 rounded-full text-xs font-semibold text-white"
-                      style={{ backgroundColor: branding.primaryColor }}
+                      className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#00c600] text-[#212121]"
                     >
                       {item.badge}
                     </span>
                   ) : (
-                    <ChevronRight className="w-5 h-5 text-slate-400" />
+                    <ChevronRight className="w-5 h-5 text-[#a0a0a0]" />
                   )}
                 </button>
               ))}
@@ -209,7 +206,7 @@ export default function Profile() {
           <Button
             variant="outline"
             onClick={handleLogout}
-            className="w-full py-6 text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
+            className="w-full py-6 text-red-400 border-red-400/30 hover:bg-red-500/10 hover:text-red-400"
           >
             <LogOut className="w-5 h-5 mr-2" />
             Log Out
