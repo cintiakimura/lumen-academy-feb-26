@@ -18,7 +18,7 @@ export default function Landing() {
             onClick={handleLogin}
             className="btn-primary uppercase tracking-wider"
           >
-            FREE DEMO
+            SIGN UP TO NEXT WEBINAR
           </button>
           <button 
             onClick={handleLogin}
