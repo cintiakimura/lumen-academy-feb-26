@@ -3,6 +3,27 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
 export default function Landing() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is already authenticated and redirect
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (isAuth) {
+        base44.auth.me().then(user => {
+          if (user.role === 'admin') {
+            navigate(createPageUrl('TeacherDashboard'));
+          } else {
+            navigate(createPageUrl('StudentDashboard'));
+          }
+        });
+      }
+    });
+  }, [navigate]);
+
+  const handleLogin = () => {
+    base44.auth.redirectToLogin(window.location.origin + createPageUrl('Landing'));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#E0F2FE] via-white to-[#EEF2FF]" style={{ fontFamily: 'Manrope, Inter, sans-serif' }}>
       <style>{`
