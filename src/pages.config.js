@@ -47,8 +47,34 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Landing from './pages/Landing';
+import Onboarding from './pages/Onboarding';
+import TeacherDashboard from './pages/TeacherDashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import CourseDetail from './pages/CourseDetail';
+import Courses from './pages/Courses';
+import Profile from './pages/Profile';
+import TeacherAnalytics from './pages/TeacherAnalytics';
+import TeacherStudents from './pages/TeacherStudents';
+import TeacherCourses from './pages/TeacherCourses';
+import Settings from './pages/Settings';
 
-export const pagesConfig = {
-	Pages: {}
+
+export const PAGES = {
+    "Landing": Landing,
+    "Onboarding": Onboarding,
+    "TeacherDashboard": TeacherDashboard,
+    "StudentDashboard": StudentDashboard,
+    "CourseDetail": CourseDetail,
+    "Courses": Courses,
+    "Profile": Profile,
+    "TeacherAnalytics": TeacherAnalytics,
+    "TeacherStudents": TeacherStudents,
+    "TeacherCourses": TeacherCourses,
+    "Settings": Settings,
 }
 
+export const pagesConfig = {
+    mainPage: "Landing",
+    Pages: PAGES,
+};
