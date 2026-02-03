@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { base44 } from '@/api/base44Client';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -63,11 +64,12 @@ export default function Landing() {
             I want to learn
           </button>
         </Link>
-        <Link to={createPageUrl('Login')}>
-          <button className="px-4 py-2 text-sm text-white bg-[#0EA5E9] rounded-full transition-all hover:bg-[#0284C7] hover:shadow-lg teal-glow">
-            Login / Sign up
-          </button>
-        </Link>
+        <button 
+          onClick={handleLogin}
+          className="px-4 py-2 text-sm text-white bg-[#0EA5E9] rounded-full transition-all hover:bg-[#0284C7] hover:shadow-lg teal-glow"
+        >
+          Login / Sign up
+        </button>
       </nav>
 
       {/* Hero */}

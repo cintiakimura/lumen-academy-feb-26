@@ -18,6 +18,8 @@ import CourseCard from '@/components/CourseCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
