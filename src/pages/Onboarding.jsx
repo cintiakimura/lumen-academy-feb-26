@@ -83,7 +83,7 @@ export default function Onboarding() {
 
         {/* Progress */}
         <div style={{ display: 'flex', gap: '12px', marginBottom: '32px' }}>
-          {[1, 2, 3].map(s => (
+          {[1, 2, 3, 4].map(s => (
             <div
               key={s}
               style={{
