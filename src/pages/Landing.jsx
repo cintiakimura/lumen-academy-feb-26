@@ -13,7 +13,7 @@ export default function Landing() {
         <img 
           src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/1cf3c4952_lumenlogo.png"
           alt="LUMEN"
-          style={{ height: '40px' }}
+          style={{ height: '50px' }}
         />
         <div className="flex gap-4">
           <button 
@@ -54,14 +54,14 @@ export default function Landing() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
-            <div className="relative h-full">
+            <div className="relative" style={{ height: '50px' }}>
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
                 alt="Professional learning" 
                 className="w-full h-full object-cover opacity-20"
               />
             </div>
-            <div className="relative h-full">
+            <div className="relative" style={{ height: '50px' }}>
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
                 alt="Student learning" 
@@ -74,7 +74,7 @@ export default function Landing() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-6xl mx-auto text-left">
-          <h1 style={{ fontSize: '120px', color: '#00c600', marginBottom: '24px', lineHeight: 1.1, fontWeight: '100' }}>
+          <h1 style={{ fontSize: '30px', color: '#00c600', marginBottom: '24px', lineHeight: 1.1, fontWeight: '100' }}>
             Learning made for you, and just for you
           </h1>
           <p style={{ fontSize: '24px', color: '#FFFFFF', maxWidth: '800px', marginBottom: '48px' }}>
