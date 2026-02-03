@@ -1,142 +1,168 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
+import React from 'react';
 import { base44 } from '@/api/base44Client';
 
 export default function Landing() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if user is already authenticated and redirect
-    base44.auth.isAuthenticated().then(isAuth => {
-      if (isAuth) {
-        base44.auth.me().then(user => {
-          if (user.role === 'admin') {
-            navigate(createPageUrl('TeacherDashboard'));
-          } else {
-            navigate(createPageUrl('StudentDashboard'));
-          }
-        });
-      }
-    });
-  }, [navigate]);
-
   const handleLogin = () => {
-    base44.auth.redirectToLogin(window.location.origin + createPageUrl('Landing'));
+    base44.auth.redirectToLogin();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E0F2FE] via-white to-[#EEF2FF]" style={{ fontFamily: 'Manrope, Inter, sans-serif' }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap');
-        
-        .handwritten-feel {
-          font-variation-settings: 'wght' 300;
-          letter-spacing: -0.02em;
-        }
-        
-        .paper-texture {
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(10px);
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-        
-        .polaroid-shadow {
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-          border: 12px solid white;
-          border-bottom-width: 40px;
-        }
-        
-        .teal-glow:hover {
-          box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-        }
-      `}</style>
-
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
-      <nav className="absolute top-0 right-0 p-6 flex gap-3 z-10">
-        <Link to={createPageUrl('Onboarding')}>
-          <button className="px-4 py-2 text-sm text-[#1F2937] bg-white/50 backdrop-blur-sm rounded-full transition-all hover:bg-white hover:shadow-md teal-glow">
-            I want to teach
+      <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
+        <div className="text-2xl tracking-tight" style={{ color: '#00c600', fontWeight: '100' }}>
+          LUMEN
+        </div>
+        <div className="flex gap-4">
+          <button 
+            onClick={handleLogin}
+            className="btn-primary uppercase tracking-wider"
+          >
+            FREE DEMO
           </button>
-        </Link>
-        <Link to={createPageUrl('Onboarding')}>
-          <button className="px-4 py-2 text-sm text-[#1F2937] bg-white/50 backdrop-blur-sm rounded-full transition-all hover:bg-white hover:shadow-md teal-glow">
-            I want to learn
+          <button 
+            onClick={handleLogin}
+            className="uppercase tracking-wider"
+            style={{ 
+              height: '48px',
+              padding: '0 24px',
+              borderRadius: '12px',
+              color: 'var(--primary)',
+              border: '1px solid var(--primary)',
+              background: 'transparent',
+              fontWeight: 600,
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'var(--primary)';
+              e.target.style.color = 'var(--bg)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'transparent';
+              e.target.style.color = 'var(--primary)';
+            }}
+          >
+            LOGIN
           </button>
-        </Link>
-        <button 
-          onClick={handleLogin}
-          className="px-4 py-2 text-sm text-white bg-[#0EA5E9] rounded-full transition-all hover:bg-[#0284C7] hover:shadow-lg teal-glow"
-        >
-          Login / Sign up
-        </button>
+        </div>
       </nav>
 
-      {/* Hero */}
-      <section className="px-6 py-20 lg:py-32">
+      {/* Hero Section */}
+      <section className="relative flex items-center" style={{ height: '58vh', padding: '16px' }}>
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div className="grid grid-cols-2 h-full">
+            <div className="relative h-full">
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
+                alt="Professional learning" 
+                className="w-full h-full object-cover opacity-40"
+              />
+            </div>
+            <div className="relative h-full">
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
+                alt="Student learning" 
+                className="w-full h-full object-cover opacity-40"
+              />
+            </div>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/80 via-[#1A1A1A]/60 to-[#1A1A1A]" />
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-6xl mx-auto text-left">
+          <h1 style={{ fontSize: '48px', color: '#00c600', marginBottom: '12px', lineHeight: 1.2, fontWeight: '100' }}>
+            Learning made for you, and just for you
+          </h1>
+          <p style={{ fontSize: '21.6px', color: '#FFFFFF', maxWidth: '640px' }}>
+            Cutting-edge AI meets neuroscience to transform any course into a truly personalized learning experience
+          </p>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-6xl mx-auto">
-          {/* Headline */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl lg:text-5xl text-[#1F2937] mb-4 leading-relaxed handwritten-feel" style={{ fontWeight: 300 }}>
-              Your pace. Your way. We understand.
-            </h1>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Nobody learns the same way</h3>
+              <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
+                Some need to talk it out,<br/>
+                Some need to see it first,<br/>
+                Some need to imagine it step by step
+              </p>
+            </div>
+            
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Your brain your choice</h3>
+              <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
+                You set your rhythm,<br/>
+                We adapt — to your pace, your style, even your mood,<br/>
+                Short bursts when you're overwhelmed. Deeper dives when you're in flow
+              </p>
+            </div>
+            
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Empowering teachers</h3>
+              <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
+                Upload your content (videos, PDFs, text, anything),<br/>
+                We reshape it so it fits you — and every person in your team.<br/>
+                The result: real retention, real mastery, real progress
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
 
-          {/* Photos Side by Side */}
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-center mb-16">
-            <div className="polaroid-shadow rounded-sm rotate-[-2deg] hover:rotate-0 transition-transform">
-              <img 
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=500&fit=crop" 
-                alt="Doctor on phone" 
-                className="w-64 h-80 object-cover rounded-sm"
-              />
+      {/* Technology Section */}
+      <section className="py-12 px-6 lg:px-8 bg-[#0D0D0D]">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-2xl lg:text-3xl text-white mb-4" style={{ fontWeight: '100' }}>
+            A method backed by more than 103 studies
+          </h2>
+
+          <div className="space-y-8 text-left max-w-2xl mx-auto">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] text-xl">AI</span>
+              </div>
+              <div>
+                <h3 className="text-xl mb-2" style={{ color: '#00c600', fontWeight: '100' }}>You are not a number</h3>
+                <p style={{ color: '#FFFFFF' }}>
+                  For the first time a the learning experience designed to completely adapt to each individual user, same content unique experiences. From podcasts, videos, slides until deep conversations, you choose what works for you
+                </p>
+              </div>
             </div>
-            <div className="polaroid-shadow rounded-sm rotate-[2deg] hover:rotate-0 transition-transform">
-              <img 
-                src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=400&h=500&fit=crop" 
-                alt="Mechanic on phone" 
-                className="w-64 h-80 object-cover rounded-sm"
-              />
+
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] text-xl">🧠</span>
+              </div>
+              <div>
+                <h3 className="text-xl mb-2" style={{ color: '#00c600', fontWeight: '100' }}>You are not alone</h3>
+                <p style={{ color: '#FFFFFF' }}>
+                  We will support and adapt until you succeed, no judgement, no pressure, because knowledge is yours, forever
+                </p>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Body Text - Letter Style */}
-          <div className="max-w-3xl mx-auto space-y-12">
-            <p className="text-lg text-[#1F2937] leading-relaxed" style={{ fontWeight: 300 }}>
-              Cutting-edge AI meets neuroscience — so every moment fits you.
-            </p>
-
-            <div className="space-y-3 paper-texture rounded-2xl p-8">
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Night owl? We wait till you're ready.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Early bird? We start before dawn.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Neurodivergent? Short bursts, no pressure — all progress.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Frustrated? We pause, adjust, go deeper when you're calm.
-              </p>
-            </div>
-
-            <div className="space-y-6 paper-texture rounded-2xl p-8">
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                <span className="text-[#0EA5E9]">65%</span> learn best through conversation — not slides. We make it feel like real talk.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                <span className="text-[#0EA5E9]">70%</span> retain more with podcasts or audio — short, on-the-go. We turn content into bite-sized listening.
-              </p>
-              <p className="text-base text-[#1F2937] leading-loose" style={{ fontWeight: 300 }}>
-                Visual learners grab <span className="text-[#0EA5E9]">65%</span> more when they picture it first. We add diagrams — then mental rehearsal.
-              </p>
-            </div>
-
-            <p className="text-sm text-[#6B7280] text-center leading-relaxed" style={{ fontWeight: 300 }}>
-              Backed by more than 103 studies — because one method doesn't fit everyone.
-            </p>
-          </div>
+      {/* CTA Section */}
+      <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 style={{ fontSize: '32px', color: '#00c600', marginBottom: '32px', fontWeight: '100' }}>
+            Because one method doesn't fit everyone
+          </h2>
+          <button 
+            onClick={handleLogin}
+            className="btn-primary uppercase tracking-wider"
+            style={{ fontSize: '18px' }}
+          >
+            Get Started
+          </button>
         </div>
       </section>
     </div>
