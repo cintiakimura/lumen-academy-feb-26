@@ -10,11 +10,9 @@ export default function Landing() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
       <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
-        <img 
-          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/1cf3c4952_lumenlogo.png"
-          alt="LUMEN"
-          style={{ height: '50px' }}
-        />
+        <div style={{ fontSize: '30px', color: '#00c600', fontWeight: '100' }}>
+          LUMEN
+        </div>
         <div className="flex gap-4">
           <button 
             onClick={handleLogin}
