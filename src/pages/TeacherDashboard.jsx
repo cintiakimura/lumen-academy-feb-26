@@ -19,6 +19,7 @@ import CourseCard from '@/components/CourseCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
 
 export default function TeacherDashboard() {
   const navigate = useNavigate();
@@ -32,11 +33,11 @@ export default function TeacherDashboard() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated() || !authService.isTeacher()) {
-      navigate(createPageUrl('Login'));
-      return;
-    }
-    setCourses(storageService.getCourses());
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
   }, [navigate]);
 
   const handleCourseCreated = (newCourse) => {

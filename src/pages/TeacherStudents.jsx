@@ -25,6 +25,7 @@ import TeacherSidebar from '@/components/TeacherSidebar';
 import ProgressBar from '@/components/ui/ProgressBar';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
 
 export default function TeacherStudents() {
   const navigate = useNavigate();

@@ -9,6 +9,8 @@ import BottomNav from '@/components/BottomNav';
 import CourseCard from '@/components/CourseCard';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 
 const CATEGORIES = [
   { id: 'all', label: 'All Courses' },
@@ -21,22 +23,24 @@ const CATEGORIES = [
 
 export default function Courses() {
   const navigate = useNavigate();
-  const [courses, setCourses] = useState([]);
-  const [progress, setProgress] = useState({});
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   
-  const user = authService.getCurrentUser();
   const branding = storageService.getBranding();
 
+  const { data: courses = [] } = useQuery({
+    queryKey: ['all-courses'],
+    queryFn: () => base44.entities.Course.filter({ is_published: true }),
+    initialData: []
+  });
+
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
-      navigate(createPageUrl('Login'));
-      return;
-    }
-    setCourses(storageService.getCourses());
-    setProgress(storageService.getProgress(user?.id));
-  }, [navigate, user?.id]);
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
+  }, [navigate]);
 
   const filteredCourses = courses.filter(course => {
     const matchesSearch = course.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -105,7 +109,6 @@ export default function Courses() {
               >
                 <CourseCard
                   course={course}
-                  progress={progress[course.id]}
                   onClick={() => handleCourseClick(course)}
                 />
               </motion.div>

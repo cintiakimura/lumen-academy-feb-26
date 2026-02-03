@@ -30,13 +30,18 @@ export default function StudentDashboard() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
-      navigate(createPageUrl('Login'));
-      return;
-    }
-    setCourses(storageService.getCourses());
-    setProgress(storageService.getProgress(user?.id));
-  }, [navigate, user?.id]);
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
+  }, [navigate]);
+
+  const { data: courses = [] } = useQuery({
+    queryKey: ['all-courses'],
+    queryFn: () => base44.entities.Course.filter({ is_published: true }),
+    initialData: []
+  });
 
   const enrolledCourses = courses.slice(0, 3); // Mock enrolled courses
   

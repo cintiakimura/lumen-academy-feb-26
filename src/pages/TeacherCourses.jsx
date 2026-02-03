@@ -36,9 +36,11 @@ export default function TeacherCourses() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated() || !authService.isTeacher()) {
-      navigate(createPageUrl('Login'));
-    }
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
   }, [navigate]);
 
   const { data: courses = [], refetch } = useQuery({
