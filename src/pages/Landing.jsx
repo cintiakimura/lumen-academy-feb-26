@@ -48,7 +48,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center" style={{ minHeight: '100vh', padding: '32px' }}>
+      <section className="relative flex items-center" style={{ minHeight: '50vh', padding: '16px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
@@ -72,17 +72,17 @@ export default function Landing() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-6xl mx-auto">
-          <h1 style={{ fontSize: '80px', fontWeight: 600, color: 'var(--primary)', marginBottom: '24px', lineHeight: 1.2 }}>
+          <h1 style={{ fontSize: '40px', fontWeight: 600, color: 'var(--primary)', marginBottom: '12px', lineHeight: 1.2 }}>
             Learning made easy
           </h1>
-          <p style={{ fontSize: '24px', fontWeight: 400, color: 'var(--text)', maxWidth: '640px' }}>
+          <p style={{ fontSize: '18px', fontWeight: 400, color: 'var(--text)', maxWidth: '640px' }}>
             Turn any content into adaptive micro-lessons
           </p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="px-6 lg:px-8" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
+      <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
             <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
@@ -113,12 +113,12 @@ export default function Landing() {
       </section>
 
       {/* Technology Section */}
-      <section className="py-24 px-6 lg:px-8 bg-[#0D0D0D]">
+      <section className="py-12 px-6 lg:px-8 bg-[#0D0D0D]">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-light text-white mb-6">
+          <h2 className="text-2xl lg:text-3xl font-light text-white mb-4">
             Pioneering technology for your learning
           </h2>
-          <p className="text-xl text-[#8B8B8B] mb-16 max-w-3xl mx-auto">
+          <p className="text-lg text-[#8B8B8B] mb-8 max-w-3xl mx-auto">
             Cutting-edge AI meets neuroscience research — every moment designed to fit your unique learning profile
           </p>
 
@@ -159,7 +159,7 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="px-6 lg:px-8" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
+      <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-4xl mx-auto text-center">
           <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Backed by 103+ studies</p>
           <h2 style={{ fontSize: '32px', fontWeight: 600, color: 'var(--text)', marginBottom: '32px' }}>
