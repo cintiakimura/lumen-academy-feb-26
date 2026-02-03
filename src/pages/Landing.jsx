@@ -83,7 +83,7 @@ export default function Landing() {
             className="btn-primary uppercase tracking-wider"
             style={{ height: '48px' }}
           >
-            GET STARTED
+            TRY FOR FREE
           </button>
         </div>
       </section>
