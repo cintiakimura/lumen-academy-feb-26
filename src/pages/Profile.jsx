@@ -71,7 +71,7 @@ export default function Profile() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#212121] pb-20">
+    <div className="min-h-screen bg-[#212121] pb-64">
       {/* Header */}
       <div 
         className="px-6 pt-12 pb-24 rounded-b-3xl bg-gradient-to-br from-[#00c600] to-[#00a600]"

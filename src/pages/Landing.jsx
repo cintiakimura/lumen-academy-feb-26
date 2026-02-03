@@ -42,7 +42,7 @@ export default function Landing() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <div style={{ minHeight: '100vh', background: '#212121' }}>
       {/* Hero Section */}
       <section className="relative flex items-center" style={{ minHeight: '67vh', padding: '32px' }}>
         {/* Background Image */}
@@ -88,7 +88,7 @@ export default function Landing() {
       <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
-            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+            <div style={{ padding: '24px', background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(8px)', border: '1px solid #333333', borderRadius: '16px' }}>
               <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Nobody learns the same way</h3>
               <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
                 Some need to talk it out,<br/>
@@ -96,8 +96,8 @@ export default function Landing() {
                 Some need to imagine it step by step
               </p>
             </div>
-            
-            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+
+            <div style={{ padding: '24px', background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(8px)', border: '1px solid #333333', borderRadius: '16px' }}>
               <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Your brain your choice</h3>
               <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
                 You set your rhythm,<br/>
@@ -105,8 +105,8 @@ export default function Landing() {
                 Short bursts when you're overwhelmed. Deeper dives when you're in flow
               </p>
             </div>
-            
-            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+
+            <div style={{ padding: '24px', background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(8px)', border: '1px solid #333333', borderRadius: '16px' }}>
               <h3 style={{ fontSize: '28.8px', color: '#00c600', marginBottom: '12px', fontWeight: '100' }}>Empowering teachers</h3>
               <p style={{ fontSize: '19.2px', color: '#FFFFFF', lineHeight: 1.6 }}>
                 Upload your content (videos, PDFs, text, anything),<br/>

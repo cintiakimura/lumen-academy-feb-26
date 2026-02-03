@@ -63,7 +63,7 @@ export default function StudentDashboard() {
   const currentLesson = currentCourse?.lessons?.[currentLessonIndex];
 
   return (
-    <div className="min-h-screen pb-20" style={{ background: 'var(--bg)' }}>
+    <div className="min-h-screen pb-64" style={{ background: '#212121' }}>
       {/* Header */}
       <header 
         className="px-6 pt-12 pb-8"
@@ -120,7 +120,7 @@ export default function StudentDashboard() {
 
       <div className="px-6 -mt-4 space-y-6">
         {/* Quick Stats */}
-        <Card style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', maxWidth: '100%', width: '100%', padding: 0, margin: 0 }}>
+        <Card style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(8px)', border: '1px solid #333333', maxWidth: '100%', width: '100%', padding: 0, margin: 0, borderRadius: '16px' }}>
           <CardContent className="p-0">
             <div className="grid grid-cols-3 divide-x" style={{ borderColor: 'var(--glass-border)' }}>
               {[
@@ -215,7 +215,7 @@ export default function StudentDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <Card style={{ background: 'var(--surface)', border: '1px solid var(--glass-border)' }}>
+          <Card style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid #333333', backdropFilter: 'blur(8px)', borderRadius: '16px' }}>
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>

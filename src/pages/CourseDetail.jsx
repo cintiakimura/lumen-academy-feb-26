@@ -170,13 +170,14 @@ export default function CourseDetail() {
   const progressPercent = totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0;
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+    <div className="min-h-screen pb-64" style={{ background: '#212121' }}>
       {/* Header */}
       <header 
         className="sticky top-0 z-30 px-4 py-3 flex items-center gap-4"
         style={{ 
-          background: 'var(--primary)',
-          backdropFilter: 'blur(10px)'
+          background: 'rgba(33, 33, 33, 0.8)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid #333333'
         }}
       >
         <Button
@@ -201,9 +202,9 @@ export default function CourseDetail() {
         <aside 
           className="lg:w-80 lg:min-h-screen"
           style={{ 
-            background: 'var(--glass-bg)',
-            backdropFilter: 'blur(10px)',
-            borderRight: '1px solid var(--glass-border)'
+            background: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(8px)',
+            borderRight: '1px solid #333333'
           }}
         >
           <div className="p-4">
@@ -267,7 +268,7 @@ export default function CourseDetail() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-8" style={{ background: 'var(--bg)' }}>
+        <main className="flex-1 p-4 lg:p-8" style={{ background: '#212121' }}>
           {activeLesson ? (
             <AnimatePresence mode="wait">
               {!showChat ? (
@@ -290,7 +291,7 @@ export default function CourseDetail() {
                   </div>
 
                   {/* Content Placeholder based on format */}
-                  <Card className="mb-6 overflow-hidden" style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)' }}>
+                  <Card className="mb-6 overflow-hidden" style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid #333333', backdropFilter: 'blur(8px)', borderRadius: '16px' }}>
                     <CardContent className="p-0">
                       {activeLesson.format === 'video' ? (
                        <div className="aspect-video bg-slate-900">
@@ -333,7 +334,7 @@ export default function CourseDetail() {
                   </Card>
 
                   {/* Lesson Content */}
-                  <Card className="mb-6" style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)' }}>
+                  <Card className="mb-6" style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid #333333', backdropFilter: 'blur(8px)', borderRadius: '16px' }}>
                     <CardContent className="p-6">
                       <h3 className="font-semibold mb-3" style={{ color: 'var(--text)' }}>Key Points</h3>
                       <p className="leading-relaxed" style={{ color: 'var(--text-muted)' }}>{activeLesson.content}</p>

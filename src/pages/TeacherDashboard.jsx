@@ -85,30 +85,31 @@ export default function TeacherDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 lg:flex">
+    <div className="min-h-screen bg-slate-50 lg:flex" style={{ background: '#212121' }}>
       <TeacherSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
       <main className="flex-1 lg:ml-0">
         {/* Header */}
-        <header className="bg-white border-b border-slate-100 px-6 py-4 lg:px-8">
+        <header style={{ background: 'rgba(33, 33, 33, 0.8)', borderBottom: '1px solid #333333', padding: '16px 24px' }}>
           <div className="flex items-center justify-between">
             <div className="lg:hidden" /> {/* Spacer for mobile menu button */}
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
-              <p className="text-sm text-slate-500">Welcome back, {user?.name || 'Teacher'}</p>
+              <h1 style={{ fontSize: '24px', fontWeight: '100', color: '#00c600' }}>Dashboard</h1>
+              <p style={{ fontSize: '14px', color: '#999999' }}>Welcome back, {user?.name || 'Teacher'}</p>
             </div>
-            <Button
+            <button
               onClick={() => setShowUploadForm(true)}
-              className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-              style={{ background: `linear-gradient(to right, ${branding.primaryColor}, ${branding.primaryColor}dd)` }}
+              style={{ background: '#00c600', color: '#000000', border: 'none', borderRadius: '12px', padding: '12px 24px', cursor: 'pointer', fontSize: '14px', fontWeight: 'normal' }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#00e600'}
+              onMouseLeave={(e) => e.currentTarget.style.background = '#00c600'}
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 mr-2 inline" />
               New Course
-            </Button>
+            </button>
           </div>
         </header>
 
-        <div className="p-6 lg:p-8 space-y-8">
+        <div className="p-6 lg:p-8 space-y-8 pb-64">
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {stats.map((stat, index) => (
