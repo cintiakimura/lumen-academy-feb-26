@@ -1,9 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 
 export default function Landing() {
+  const [showBooking, setShowBooking] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleLogin = () => {
     base44.auth.redirectToLogin();
+  };
+
+  const getNextFriday2PM = () => {
+    const today = new Date();
+    const daysUntilFriday = (5 - today.getDay() + 7) % 7;
+    const nextFriday = new Date(today);
+    nextFriday.setDate(today.getDate() + (daysUntilFriday === 0 ? 7 : daysUntilFriday));
+    nextFriday.setHours(14, 0, 0, 0);
+    return nextFriday;
+  };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const nextFriday = getNextFriday2PM();
+      localStorage.setItem('webinarBooking', JSON.stringify({
+        name,
+        email,
+        date: nextFriday.toISOString()
+      }));
+      setShowBooking(false);
+      setName('');
+      setEmail('');
+      alert('Booking confirmed! Check your email.');
+    } catch (error) {
+      alert('Booking error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -15,10 +50,10 @@ export default function Landing() {
         </div>
         <div className="flex gap-4">
           <button 
-            onClick={handleLogin}
+            onClick={() => setShowBooking(true)}
             className="btn-primary uppercase tracking-wider"
           >
-            SIGN UP TO NEXT WEBINAR
+            BOOK NEXT LIVE SESSION
           </button>
           <button 
             onClick={handleLogin}
