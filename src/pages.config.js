@@ -59,7 +59,6 @@ import TeacherAnalytics from './pages/TeacherAnalytics';
 import TeacherCourses from './pages/TeacherCourses';
 import TeacherDashboard from './pages/TeacherDashboard';
 import TeacherStudents from './pages/TeacherStudents';
-import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -80,5 +79,4 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Landing",
     Pages: PAGES,
-    Layout: __Layout,
 };

@@ -48,8 +48,8 @@ export default function App() {
   }
 
   return (
-    <Router>
-      <Layout>
+    <Layout>
+      <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/onboarding" element={user ? <Onboarding /> : <Navigate to="/" />} />
@@ -63,7 +63,7 @@ export default function App() {
           <Route path="/settings" element={user ? <Settings /> : <Navigate to="/" />} />
           <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </Layout>
   );
 }
