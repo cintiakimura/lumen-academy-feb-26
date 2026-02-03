@@ -41,17 +41,24 @@ export default function Onboarding() {
   };
 
   const handleFinish = async () => {
+    const validTeachers = teachers.filter(t => t);
     const onboardingData = {
       company,
       vat,
       address,
       email,
       phone,
-      teachers: teachers.filter(t => t),
+      teachers: validTeachers,
       branding: { logo, color, font }
     };
     
     localStorage.setItem('onboarding', JSON.stringify(onboardingData));
+    
+    // Send mock invite emails to teachers
+    validTeachers.forEach(teacherEmail => {
+      console.log(`Mock email sent to ${teacherEmail}: You've been invited to teach at ${company}`);
+    });
+    
     await base44.auth.updateMe({ onboarded: true });
     
     const user = await base44.auth.me();
