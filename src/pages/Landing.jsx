@@ -53,7 +53,7 @@ export default function Landing() {
       <section className="relative flex items-center" style={{ minHeight: '100vh', padding: '32px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
-          <div className="grid grid-cols-2 h-full">
+          <div className="grid grid-cols-2" style={{ height: '100px' }}>
             <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
@@ -74,10 +74,10 @@ export default function Landing() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-6xl mx-auto text-left">
-          <h1 style={{ fontSize: '120px', color: '#00c600', marginBottom: '24px', lineHeight: 1.1, fontWeight: '100' }}>
+          <h1 style={{ fontSize: '20px', color: '#00c600', marginBottom: '24px', lineHeight: 1.1, fontWeight: '100' }}>
             Learning made for you, and just for you
           </h1>
-          <p style={{ fontSize: '24px', color: '#FFFFFF', maxWidth: '800px', marginBottom: '48px' }}>
+          <p style={{ fontSize: '20px', color: '#FFFFFF', maxWidth: '800px', marginBottom: '48px', fontWeight: '100' }}>
             Cutting-edge AI meets neuroscience to transform any course into a truly personalized learning experience
           </p>
           <button 
