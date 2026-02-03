@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import App from './pages/App';
 import CourseDetail from './pages/CourseDetail';
 import Courses from './pages/Courses';
 import Landing from './pages/Landing';
@@ -58,11 +59,11 @@ import TeacherAnalytics from './pages/TeacherAnalytics';
 import TeacherCourses from './pages/TeacherCourses';
 import TeacherDashboard from './pages/TeacherDashboard';
 import TeacherStudents from './pages/TeacherStudents';
-import App from './pages/App';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "App": App,
     "CourseDetail": CourseDetail,
     "Courses": Courses,
     "Landing": Landing,
@@ -74,7 +75,6 @@ export const PAGES = {
     "TeacherCourses": TeacherCourses,
     "TeacherDashboard": TeacherDashboard,
     "TeacherStudents": TeacherStudents,
-    "App": App,
 }
 
 export const pagesConfig = {

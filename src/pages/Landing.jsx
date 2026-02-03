@@ -43,45 +43,6 @@ export default function Landing() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
-      {/* Top Nav */}
-      <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50" style={{ opacity: '0.4' }}>
-        <div style={{ fontSize: '30px', color: '#00c600', fontWeight: '100' }}>
-          LUMEN
-        </div>
-        <div className="flex gap-4">
-          <button 
-            onClick={() => setShowBooking(true)}
-            className="btn-primary uppercase tracking-wider"
-          >
-            BOOK NEXT LIVE SESSION
-          </button>
-          <button 
-            onClick={handleLogin}
-            className="uppercase tracking-wider"
-            style={{ 
-              height: '48px',
-              padding: '0 24px',
-              borderRadius: '12px',
-              color: 'var(--primary)',
-              border: '1px solid var(--primary)',
-              background: 'transparent',
-              fontWeight: 600,
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'var(--primary)';
-              e.target.style.color = 'var(--bg)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'transparent';
-              e.target.style.color = 'var(--primary)';
-            }}
-          >
-            LOGIN
-          </button>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="relative flex items-center" style={{ minHeight: '67vh', padding: '32px' }}>
         {/* Background Image */}
@@ -91,14 +52,14 @@ export default function Landing() {
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
                 alt="Professional learning" 
-                className="w-full h-full object-cover opacity-20"
+                className="w-full h-full object-cover opacity-70"
               />
             </div>
             <div className="relative h-full">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
                 alt="Student learning" 
-                className="w-full h-full object-cover opacity-20"
+                className="w-full h-full object-cover opacity-70"
               />
             </div>
           </div>
