@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import { Clock, BookOpen, Award, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import ProgressBar from './ui/ProgressBar';
 
 export default function CourseCard({ 
   course, 
@@ -14,17 +11,9 @@ export default function CourseCard({
   className 
 }) {
   const totalLessons = course.lessons?.length || 0;
-  const completedLessons = progress?.completedLessons?.length || 0;
+  const completedLessons = progress?.completed_lessons?.length || 0;
   const progressPercent = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
   const totalDuration = course.lessons?.reduce((sum, l) => sum + (l.duration || 5), 0) || 0;
-
-  const categoryColors = {
-    auto_repair: 'from-[#2D2D2D] to-[#1A1A1A]',
-    welding: 'from-[#8B8B8B] to-[#6B6B6B]',
-    sales: 'from-[#00D100] to-[#00B800]',
-    accounting: 'from-[#2D2D2D] to-[#1A1A1A]',
-    other: 'from-[#8B8B8B] to-[#6B6B6B]'
-  };
 
   const categoryLabels = {
     auto_repair: 'Auto Repair',
@@ -39,23 +28,40 @@ export default function CourseCard({
       <motion.div
         whileHover={{ scale: 1.02 }}
         onClick={onClick}
-        className={cn(
-          'bg-white rounded-lg p-4 shadow-sm border border-[#E0E0E0] cursor-pointer transition-all hover:shadow-md',
-          className
-        )}
+        className={cn('cursor-pointer transition-all', className)}
+        style={{ 
+          background: 'var(--glass-bg)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid var(--glass-border)',
+          borderRadius: '16px',
+          padding: '24px',
+          boxShadow: 'var(--card-shadow)'
+        }}
       >
-        <div className="flex items-center gap-3">
-          <div className={cn(
-            'w-12 h-12 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0',
-            categoryColors[course.category] || categoryColors.other
-          )}>
-            <BookOpen className="w-6 h-6 text-white" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ 
+            width: '48px', 
+            height: '48px', 
+            borderRadius: '12px', 
+            background: 'var(--primary)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            <BookOpen style={{ width: '24px', height: '24px', color: '#000000' }} />
           </div>
-          <div className="flex-1 min-w-0">
-            <h4 className="font-semibold text-[#1A1A1A] truncate">{course.title}</h4>
-            <p className="text-xs text-[#8B8B8B]">{totalLessons} lessons • {totalDuration} min</p>
+          
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h4 style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text)', marginBottom: '4px' }}>
+              {course.title}
+            </h4>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '14px', color: 'var(--text-muted)' }}>
+              <span>{totalLessons} lessons</span>
+              <span>{totalDuration} min</span>
+            </div>
           </div>
-          <ChevronRight className="w-5 h-5 text-[#8B8B8B]" />
+          <ChevronRight style={{ width: '20px', height: '20px', color: 'var(--text-muted)' }} />
         </div>
       </motion.div>
     );
@@ -63,72 +69,112 @@ export default function CourseCard({
 
   return (
     <motion.div
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.02 }}
       onClick={onClick}
-      className={cn(
-        'bg-white rounded-lg overflow-hidden shadow-sm border border-[#E0E0E0] cursor-pointer transition-all duration-300 hover:shadow-md',
-        className
-      )}
+      className={cn('cursor-pointer transition-all overflow-hidden', className)}
+      style={{
+        background: 'var(--glass-bg)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid var(--glass-border)',
+        borderRadius: '16px',
+        boxShadow: 'var(--card-shadow)'
+      }}
     >
       {/* Thumbnail */}
-      <div className="relative h-40 overflow-hidden">
+      <div style={{ position: 'relative', height: '160px', overflow: 'hidden' }}>
         {course.thumbnail ? (
           <img 
             src={course.thumbnail} 
             alt={course.title}
-            className="w-full h-full object-cover"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : (
-          <div className={cn(
-            'w-full h-full bg-gradient-to-br',
-            categoryColors[course.category] || categoryColors.other
-          )} />
+          <div style={{ 
+            width: '100%', 
+            height: '100%', 
+            background: 'linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%)' 
+          }} />
         )}
         
         {/* Category badge */}
-        <div className="absolute top-3 left-3">
-          <span className={cn(
-            'px-3 py-1 rounded-md text-xs font-semibold text-white bg-gradient-to-r uppercase tracking-wider',
-            categoryColors[course.category] || categoryColors.other
-          )}>
-            {categoryLabels[course.category] || 'Course'}
-          </span>
-        </div>
+        <span 
+          style={{ 
+            position: 'absolute',
+            top: '12px',
+            left: '12px',
+            padding: '6px 12px',
+            borderRadius: '8px',
+            fontSize: '12px',
+            background: 'var(--primary)', 
+            color: '#000000',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+          {categoryLabels[course.category] || 'Course'}
+        </span>
 
         {/* Certificate badge if completed */}
         {progressPercent === 100 && (
-          <div className="absolute top-3 right-3">
-            <div className="w-8 h-8 bg-[#00D100] rounded-lg flex items-center justify-center shadow-lg">
-              <Award className="w-4 h-4 text-white" />
+          <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
+            <div style={{ 
+              width: '32px', 
+              height: '32px', 
+              background: 'var(--primary)', 
+              borderRadius: '8px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              boxShadow: 'var(--card-shadow)'
+            }}>
+              <Award style={{ width: '16px', height: '16px', color: '#000000' }} />
             </div>
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-5">
-        <h3 className="font-bold text-lg text-[#1A1A1A] mb-2 line-clamp-1">
+      <div style={{ padding: '24px' }}>
+        <h3 style={{ fontSize: '32px', fontWeight: '600', color: 'var(--text)', marginBottom: '8px' }}>
           {course.title}
         </h3>
-        <p className="text-sm text-[#8B8B8B] mb-4 line-clamp-2">
-          {course.description}
+        
+        <p style={{ fontSize: '16px', color: 'var(--text-muted)', marginBottom: '16px', lineHeight: '1.5' }}>
+          {course.description || 'No description available'}
         </p>
 
         {/* Meta info */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-[#8B8B8B]">
-          <div className="flex items-center gap-1.5">
-            <BookOpen className="w-4 h-4" />
-            <span>{totalLessons} lessons</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4" />
-            <span>{totalDuration} min</span>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '14px', color: 'var(--text-muted)', marginBottom: '16px' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <BookOpen style={{ width: '16px', height: '16px' }} />
+            {totalLessons} lessons
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Clock style={{ width: '16px', height: '16px' }} />
+            {totalDuration} min
+          </span>
         </div>
 
         {/* Progress */}
         {progress && (
-          <ProgressBar value={progressPercent} showLabel={true} size="md" color="#00D100" />
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+                {completedLessons}/{totalLessons} completed
+              </span>
+              <span style={{ fontSize: '14px', fontWeight: '600', color: 'var(--primary)' }}>
+                {Math.round(progressPercent)}%
+              </span>
+            </div>
+            <div className="progress-bar">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercent}%` }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="progress-fill"
+              />
+            </div>
+          </div>
         )}
       </div>
     </motion.div>
