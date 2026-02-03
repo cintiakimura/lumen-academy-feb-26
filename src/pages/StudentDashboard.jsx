@@ -63,11 +63,14 @@ export default function StudentDashboard() {
   const currentLesson = currentCourse?.lessons?.[currentLessonIndex];
 
   return (
-    <div className="min-h-screen bg-white pb-20">
+    <div className="min-h-screen pb-20" style={{ background: 'var(--bg)' }}>
       {/* Header */}
       <header 
         className="px-6 pt-12 pb-8"
-        style={{ background: '#2D2D2D' }}
+        style={{ 
+          background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
+          borderRadius: '0 0 40px 40px'
+        }}
       >
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -83,17 +86,18 @@ export default function StudentDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="bg-[#00D100] border-0 shadow-lg">
+              <Card style={{ background: 'var(--primary)', border: 0, boxShadow: 'var(--card-shadow)' }}>
                 <CardContent className="p-4">
-                  <p className="text-black/70 text-xs mb-2 uppercase tracking-wider">Continue Learning</p>
+                  <p className="text-xs mb-2 uppercase tracking-wider" style={{ color: 'var(--bg)', opacity: 0.7 }}>Continue Learning</p>
                   <div className="flex items-center gap-4">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-black">{currentLesson.title}</h3>
-                      <p className="text-sm text-black/70">{currentCourse.title}</p>
+                      <h3 className="font-semibold" style={{ color: 'var(--bg)' }}>{currentLesson.title}</h3>
+                      <p className="text-sm" style={{ color: 'var(--bg)', opacity: 0.7 }}>{currentCourse.title}</p>
                     </div>
                     <Button
                       onClick={() => handleCourseClick(currentCourse)}
-                      className="bg-black text-white hover:bg-black/90 font-semibold"
+                      style={{ background: 'var(--bg)', color: 'var(--text)' }}
+                      className="font-semibold hover:opacity-90"
                     >
                       <Play className="w-4 h-4 mr-1" />
                       Resume
@@ -105,7 +109,6 @@ export default function StudentDashboard() {
                       max={currentCourse.lessons?.length || 1}
                       showLabel={false}
                       size="sm"
-                      color="black"
                     />
                   </div>
                 </CardContent>
@@ -117,39 +120,38 @@ export default function StudentDashboard() {
 
       <div className="px-6 -mt-4 space-y-6">
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { icon: BookOpen, value: enrolledCourses.length, label: 'Courses', color: 'bg-[#2D2D2D]' },
-            { icon: Trophy, value: completedLessons, label: 'Lessons', color: 'bg-[#00D100]' },
-            { icon: TrendingUp, value: `${avgMastery}%`, label: 'Mastery', color: 'bg-[#8B8B8B]' }
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + index * 0.1 }}
-            >
-              <Card className="overflow-hidden border-[#E0E0E0]">
-                <CardContent className="p-4 text-center">
-                  <div className={`w-10 h-10 ${stat.color} rounded-lg flex items-center justify-center mx-auto mb-2`}>
-                    <stat.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <p className="text-2xl font-bold text-[#1A1A1A]">{stat.value}</p>
-                  <p className="text-xs text-[#8B8B8B] uppercase tracking-wider">{stat.label}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+        <Card style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', maxWidth: '100%', width: '100%', padding: 0, margin: 0 }}>
+          <CardContent className="p-0">
+            <div className="grid grid-cols-3 divide-x" style={{ borderColor: 'var(--glass-border)' }}>
+              {[
+                { icon: BookOpen, value: enrolledCourses.length, label: 'Courses' },
+                { icon: Trophy, value: completedLessons, label: 'Lessons' },
+                { icon: TrendingUp, value: `${avgMastery}%`, label: 'Mastery' }
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.1 }}
+                  className="p-5 text-center"
+                >
+                  <stat.icon className="w-6 h-6 mx-auto mb-2" style={{ color: 'var(--primary)' }} />
+                  <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{stat.value}</p>
+                  <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
+                </motion.div>
+                </div>
+          </CardContent>
+        </Card>
 
         {/* My Courses */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-[#1A1A1A]">My Courses</h2>
+            <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>My Courses</h2>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="text-sm text-[#00D100] hover:text-[#00B800] hover:bg-[#F5F5F5]"
+              className="text-sm"
+              style={{ color: 'var(--primary)' }}
               onClick={() => navigate(createPageUrl('Courses'))}
             >
               See All
@@ -183,8 +185,8 @@ export default function StudentDashboard() {
         <section>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#00D100]" />
-              <h2 className="text-xl font-bold text-[#1A1A1A]">Recommended</h2>
+              <Sparkles className="w-5 h-5" style={{ color: 'var(--primary)' }} />
+              <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>Recommended</h2>
             </div>
           </div>
 
@@ -212,16 +214,16 @@ export default function StudentDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <Card className="bg-[#F5F5F5] border-[#E0E0E0]">
+          <Card style={{ background: 'var(--surface)', border: '1px solid var(--glass-border)' }}>
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-[#8B8B8B] text-sm uppercase tracking-wider">Daily Goal</p>
-                  <p className="text-3xl font-bold text-[#1A1A1A] mt-1">
+                  <p className="text-sm uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Daily Goal</p>
+                  <p className="text-3xl font-bold mt-1" style={{ color: 'var(--text)' }}>
                     {completedLessons} / 3 lessons
                   </p>
                 </div>
-                <div className="w-16 h-16 bg-[#00D100] rounded-lg flex items-center justify-center">
+                <div className="w-16 h-16 rounded-lg flex items-center justify-center" style={{ background: 'var(--primary)' }}>
                   <Clock className="w-8 h-8 text-white" />
                 </div>
               </div>
@@ -231,7 +233,6 @@ export default function StudentDashboard() {
                   max={3}
                   showLabel={false}
                   size="md"
-                  color="#00D100"
                 />
               </div>
             </CardContent>

@@ -39,9 +39,11 @@ export default function CourseDetail() {
   const branding = storageService.getBranding();
 
   useEffect(() => {
-    if (!authService.isAuthenticated()) {
-      navigate(createPageUrl('Login'));
-    }
+    base44.auth.isAuthenticated().then(isAuth => {
+      if (!isAuth) {
+        base44.auth.redirectToLogin();
+      }
+    });
   }, [navigate]);
 
   const { data: course } = useQuery({
@@ -157,8 +159,8 @@ export default function CourseDetail() {
 
   if (!course) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-pulse text-slate-500">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
+        <div className="animate-pulse" style={{ color: 'var(--text-muted)' }}>Loading...</div>
       </div>
     );
   }
@@ -168,11 +170,14 @@ export default function CourseDetail() {
   const progressPercent = totalLessons > 0 ? (completedCount / totalLessons) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       {/* Header */}
       <header 
         className="sticky top-0 z-30 px-4 py-3 flex items-center gap-4"
-        style={{ background: `linear-gradient(135deg, ${branding.primaryColor}, ${branding.primaryColor}dd)` }}
+        style={{ 
+          background: 'var(--primary)',
+          backdropFilter: 'blur(10px)'
+        }}
       >
         <Button
           variant="ghost"
@@ -187,15 +192,22 @@ export default function CourseDetail() {
           <p className="text-sm text-white/70">{completedCount}/{totalLessons} lessons</p>
         </div>
         <div className="w-20">
-          <ProgressBar value={progressPercent} showLabel={false} size="sm" color="white" />
+          <ProgressBar value={progressPercent} showLabel={false} size="sm" />
         </div>
       </header>
 
       <div className="flex flex-col lg:flex-row">
         {/* Lesson List - Sidebar on desktop */}
-        <aside className="lg:w-80 lg:min-h-screen lg:border-r lg:border-slate-200 bg-white">
+        <aside 
+          className="lg:w-80 lg:min-h-screen"
+          style={{ 
+            background: 'var(--glass-bg)',
+            backdropFilter: 'blur(10px)',
+            borderRight: '1px solid var(--glass-border)'
+          }}
+        >
           <div className="p-4">
-            <h2 className="font-semibold text-slate-800 mb-4">Course Content</h2>
+            <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>Course Content</h2>
             <div className="space-y-2">
               {course.lessons?.map((lesson, index) => {
                 const isCompleted = progress.completedLessons?.includes(lesson.id);
@@ -209,33 +221,36 @@ export default function CourseDetail() {
                     whileTap={canAccess ? { scale: 0.98 } : {}}
                     onClick={() => handleLessonClick(lesson, index)}
                     disabled={!canAccess}
-                    className={`w-full text-left p-4 rounded-xl transition-all ${
-                      isActive 
-                        ? 'bg-blue-50 border-2 border-blue-200' 
-                        : canAccess 
-                          ? 'bg-slate-50 hover:bg-slate-100 border-2 border-transparent' 
-                          : 'bg-slate-50 opacity-50 border-2 border-transparent'
-                    }`}
+                    className="w-full text-left p-4 rounded-xl transition-all"
+                    style={{
+                      background: isActive ? 'var(--primary)' : 'var(--surface)',
+                      border: isActive ? '2px solid var(--primary)' : '2px solid transparent',
+                      opacity: canAccess ? 1 : 0.5
+                    }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                        isCompleted ? 'bg-emerald-500' : 
-                        isActive ? 'bg-blue-500' : 
-                        'bg-slate-200'
-                      }`}>
+                      <div 
+                        className="w-8 h-8 rounded-lg flex items-center justify-center"
+                        style={{
+                          background: isCompleted ? 'var(--primary)' : isActive ? 'var(--primary)' : 'var(--surface)'
+                        }}
+                      >
                         {isCompleted ? (
                           <CheckCircle className="w-4 h-4 text-white" />
                         ) : canAccess ? (
                           <span className="text-white font-semibold text-sm">{index + 1}</span>
                         ) : (
-                          <Lock className="w-4 h-4 text-slate-400" />
+                          <Lock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className={`font-medium truncate ${isActive ? 'text-blue-700' : 'text-slate-700'}`}>
+                        <p 
+                          className="font-medium truncate"
+                          style={{ color: isActive ? 'white' : 'var(--text)' }}
+                        >
                           {lesson.title}
                         </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-slate-500">
+                        <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
                           <FormatIcon className="w-3 h-3" />
                           <span className="capitalize">{lesson.format}</span>
                           <span>•</span>
@@ -252,7 +267,7 @@ export default function CourseDetail() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-8" style={{ background: 'linear-gradient(135deg, #1a2332 0%, #0f1419 100%)' }}>
+        <main className="flex-1 p-4 lg:p-8" style={{ background: 'var(--bg)' }}>
           {activeLesson ? (
             <AnimatePresence mode="wait">
               {!showChat ? (
@@ -265,17 +280,17 @@ export default function CourseDetail() {
                 >
                   {/* Lesson Header */}
                   <div className="mb-6">
-                    <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                    <div className="flex items-center gap-2 text-sm mb-2" style={{ color: 'var(--text-muted)' }}>
                       <Clock className="w-4 h-4" />
                       <span>{activeLesson.duration} minutes</span>
                       <span>•</span>
                       <span className="capitalize">{activeLesson.format}</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-800">{activeLesson.title}</h2>
+                    <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{activeLesson.title}</h2>
                   </div>
 
                   {/* Content Placeholder based on format */}
-                  <Card className="mb-6 overflow-hidden">
+                  <Card className="mb-6 overflow-hidden" style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)' }}>
                     <CardContent className="p-0">
                       {activeLesson.format === 'video' ? (
                        <div className="aspect-video bg-slate-900">
@@ -318,10 +333,10 @@ export default function CourseDetail() {
                   </Card>
 
                   {/* Lesson Content */}
-                  <Card className="mb-6">
+                  <Card className="mb-6" style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', backdropFilter: 'blur(10px)' }}>
                     <CardContent className="p-6">
-                      <h3 className="font-semibold text-slate-800 mb-3">Key Points</h3>
-                      <p className="text-slate-600 leading-relaxed">{activeLesson.content}</p>
+                      <h3 className="font-semibold mb-3" style={{ color: 'var(--text)' }}>Key Points</h3>
+                      <p className="leading-relaxed" style={{ color: 'var(--text-muted)' }}>{activeLesson.content}</p>
                     </CardContent>
                   </Card>
 
@@ -329,8 +344,7 @@ export default function CourseDetail() {
                   <div className="flex gap-4">
                     <Button
                       onClick={() => setShowChat(true)}
-                      className="flex-1 py-6"
-                      style={{ background: branding.primaryColor }}
+                      className="btn-primary flex-1"
                     >
                       <MessageCircle className="w-5 h-5 mr-2" />
                       Practice with AI Tutor
@@ -358,12 +372,12 @@ export default function CourseDetail() {
                     <Button
                       variant="ghost"
                       onClick={() => setShowChat(false)}
-                      className="text-slate-600"
+                      style={{ color: 'var(--text)' }}
                     >
                       <ArrowLeft className="w-4 h-4 mr-2" />
                       Back to Lesson
                     </Button>
-                    <h3 className="font-semibold text-slate-800">{activeLesson.title}</h3>
+                    <h3 className="font-semibold" style={{ color: 'var(--text)' }}>{activeLesson.title}</h3>
                   </div>
                   
                   <ChatBox
@@ -377,8 +391,8 @@ export default function CourseDetail() {
             </AnimatePresence>
           ) : (
             <div className="text-center py-20">
-              <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-600">Select a lesson to begin</h3>
+              <BookOpen className="w-16 h-16 mx-auto mb-4" style={{ color: 'var(--text-muted)' }} />
+              <h3 className="text-lg font-semibold" style={{ color: 'var(--text-muted)' }}>Select a lesson to begin</h3>
             </div>
           )}
         </main>
