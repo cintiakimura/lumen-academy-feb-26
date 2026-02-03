@@ -136,7 +136,7 @@ export default function Layout({ children, currentPageName }) {
       {/* Header */}
       {user && <Header user={user} onMenuToggle={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />}
 
-      <div style={{ display: 'flex', flex: 1, marginTop: user ? '80px' : 0 }}>
+      <div style={{ display: 'flex', flex: 1 }}>
         {/* Sidebar */}
         {showSidebar && (
           <Sidebar 
@@ -151,10 +151,9 @@ export default function Layout({ children, currentPageName }) {
         <div style={{
           flex: 1,
           overflowY: 'auto',
-          marginLeft: showSidebar && sidebarOpen ? '280px' : '0px',
+          paddingBottom: user ? '100px' : '0px',
           transition: 'margin-left 0.3s ease',
-          padding: '24px',
-          maxWidth: '100%'
+          width: '100%'
         }}>
           {children}
         </div>
@@ -164,26 +163,26 @@ export default function Layout({ children, currentPageName }) {
       {user && (
         <>
           <button
-            onClick={toggleChat}
-            style={{
-              position: 'fixed',
-              bottom: '24px',
-              right: '24px',
-              width: '64px',
-              height: '64px',
-              background: '#00c600',
-              border: 'none',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 40,
-              boxShadow: '0 4px 12px rgba(0, 198, 0, 0.3)',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+           onClick={toggleChat}
+           style={{
+             position: 'fixed',
+             bottom: '32px',
+             right: '32px',
+             width: '64px',
+             height: '64px',
+             background: '#00c600',
+             border: 'none',
+             borderRadius: '9999px',
+             cursor: 'pointer',
+             display: 'flex',
+             alignItems: 'center',
+             justifyContent: 'center',
+             zIndex: 40,
+             boxShadow: '0 4px 12px rgba(0, 198, 0, 0.3)',
+             transition: 'all 0.2s ease'
+           }}
+           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>

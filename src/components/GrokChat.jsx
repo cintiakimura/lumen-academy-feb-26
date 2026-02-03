@@ -54,8 +54,8 @@ export default function GrokChat({ user, onClose }) {
   return (
     <div style={{
       position: 'fixed',
-      bottom: '100px',
-      right: '24px',
+      bottom: '120px',
+      right: '32px',
       width: '400px',
       height: '500px',
       background: 'rgba(33, 33, 33, 0.95)',
@@ -66,13 +66,7 @@ export default function GrokChat({ user, onClose }) {
       flexDirection: 'column',
       zIndex: 40,
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-      '@media (max-width: 768px)': {
-        width: '100%',
-        height: '100%',
-        bottom: '60px',
-        right: 0,
-        borderRadius: 0
-      }
+      maxHeight: '70vh'
     }}>
       {/* Header */}
       <div style={{
