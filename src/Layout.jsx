@@ -6,13 +6,13 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap';
+    link.href = 'https://fonts.cdnfonts.com/css/akkurat';
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.body.style.fontFamily = 'Inter, system-ui, sans-serif';
+    document.body.style.fontFamily = 'Akkurat, system-ui, sans-serif';
 
     return () => {
       document.head.removeChild(link);
@@ -20,9 +20,9 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ fontFamily: 'Akkurat, system-ui, sans-serif' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/akkurat');
         
         :root {
           --bg: #212121;
@@ -53,7 +53,7 @@ export default function Layout({ children }) {
         body {
           background: var(--bg);
           color: var(--text);
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: 'Akkurat', system-ui, sans-serif;
           transition: background 0.3s ease, color 0.3s ease;
         }
         
