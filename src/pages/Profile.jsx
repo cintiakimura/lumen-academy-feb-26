@@ -22,6 +22,7 @@ import { motion } from 'framer-motion';
 import BottomNav from '@/components/BottomNav';
 import authService from '@/components/services/authService';
 import storageService from '@/components/services/storageService';
+import { base44 } from '@/api/base44Client';
 
 export default function Profile() {
   const navigate = useNavigate();

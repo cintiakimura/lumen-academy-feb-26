@@ -82,20 +82,20 @@ export default function Landing() {
             </h1>
           </div>
 
-          {/* Photos Side by Side */}
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-center mb-16">
-            <div className="polaroid-shadow rounded-sm rotate-[-2deg] hover:rotate-0 transition-transform">
+          {/* Photos Side by Side - Full Width */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mb-16 w-full max-w-full -mx-6">
+            <div className="w-full h-[50vh] md:h-[60vh]">
               <img 
-                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=500&fit=crop" 
-                alt="Doctor on phone" 
-                className="w-64 h-80 object-cover rounded-sm"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/ee482fc99_Screenshot2026-02-03at074623.png" 
+                alt="Professional learning" 
+                className="w-full h-full object-cover"
               />
             </div>
-            <div className="polaroid-shadow rounded-sm rotate-[2deg] hover:rotate-0 transition-transform">
+            <div className="w-full h-[50vh] md:h-[60vh]">
               <img 
-                src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=400&h=500&fit=crop" 
-                alt="Mechanic on phone" 
-                className="w-64 h-80 object-cover rounded-sm"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69816fdfc8b62c2372da0c4b/32b64ee3c_Screenshot2026-02-03at074745.png" 
+                alt="Student learning" 
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
