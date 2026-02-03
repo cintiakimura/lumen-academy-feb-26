@@ -139,7 +139,8 @@ export default function StudentDashboard() {
                   <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{stat.value}</p>
                   <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
                 </motion.div>
-                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
