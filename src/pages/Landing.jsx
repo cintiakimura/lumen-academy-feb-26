@@ -7,22 +7,40 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1A1A1A]">
+    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
       <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
-        <div className="text-2xl font-bold text-[#00D100] tracking-tight">
+        <div className="text-2xl font-bold tracking-tight" style={{ color: 'var(--primary)' }}>
           LUMEN
         </div>
         <div className="flex gap-4">
           <button 
             onClick={handleLogin}
-            className="px-6 py-2 text-sm font-medium text-[#1A1A1A] bg-[#00D100] rounded-md hover:bg-[#00B800] transition-colors uppercase tracking-wider"
+            className="btn-primary uppercase tracking-wider"
           >
             FREE DEMO
           </button>
           <button 
             onClick={handleLogin}
-            className="px-6 py-2 text-sm font-medium text-[#00D100] border border-[#00D100] rounded-md hover:bg-[#00D100] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider"
+            className="uppercase tracking-wider"
+            style={{ 
+              height: '48px',
+              padding: '0 24px',
+              borderRadius: '12px',
+              color: 'var(--primary)',
+              border: '1px solid var(--primary)',
+              background: 'transparent',
+              fontWeight: 600,
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'var(--primary)';
+              e.target.style.color = 'var(--bg)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'transparent';
+              e.target.style.color = 'var(--primary)';
+            }}
           >
             LOGIN
           </button>
@@ -30,7 +48,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative flex items-center" style={{ minHeight: '100vh', padding: '32px' }}>
         {/* Background Image */}
         <div className="absolute inset-0">
           <div className="grid grid-cols-2 h-full">
@@ -53,40 +71,40 @@ export default function Landing() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
-          <h1 className="text-5xl lg:text-7xl font-light text-[#00D100] mb-6 leading-tight">
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <h1 style={{ fontSize: '80px', fontWeight: 600, color: 'var(--primary)', marginBottom: '24px', lineHeight: 1.2 }}>
             Learning made easy
           </h1>
-          <p className="text-xl lg:text-2xl text-white font-light max-w-2xl">
+          <p style={{ fontSize: '24px', fontWeight: 400, color: 'var(--text)', maxWidth: '640px' }}>
             Turn any content into adaptive micro-lessons
           </p>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 px-6 lg:px-8 bg-[#1A1A1A]">
+      <section className="px-6 lg:px-8" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="space-y-4">
-              <div className="text-[#00D100] text-5xl font-bold">01</div>
-              <h3 className="text-2xl font-light text-white">Adaptive learning</h3>
-              <p className="text-[#8B8B8B] leading-relaxed">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>01</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Adaptive learning</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 AI-powered lessons that adapt to your pace, learning style, and schedule. Night owl or early bird, we're ready when you are.
               </p>
             </div>
             
-            <div className="space-y-4">
-              <div className="text-[#00D100] text-5xl font-bold">02</div>
-              <h3 className="text-2xl font-light text-white">Any format, any time</h3>
-              <p className="text-[#8B8B8B] leading-relaxed">
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>02</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Any format, any time</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 Convert content into podcasts, videos, slides, or interactive conversations. Learn on-the-go or deep-dive at your desk.
               </p>
             </div>
             
-            <div className="space-y-4">
-              <div className="text-[#00D100] text-5xl font-bold">03</div>
-              <h3 className="text-2xl font-light text-white">Anywhere you need</h3>
-              <p className="text-[#8B8B8B] leading-relaxed">
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>03</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Anywhere you need</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 Deliver remote training with the same quality as in-person sessions. Access your courses from any device, anywhere.
               </p>
             </div>
@@ -141,15 +159,16 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6 lg:px-8 bg-[#1A1A1A]">
+      <section className="px-6 lg:px-8" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-[#8B8B8B] mb-4 uppercase tracking-wider">Backed by 103+ studies</p>
-          <h2 className="text-4xl lg:text-5xl font-light text-white mb-8">
+          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Backed by 103+ studies</p>
+          <h2 style={{ fontSize: '32px', fontWeight: 600, color: 'var(--text)', marginBottom: '32px' }}>
             Because one method doesn't fit everyone
           </h2>
           <button 
             onClick={handleLogin}
-            className="px-12 py-4 text-lg font-medium text-[#1A1A1A] bg-[#00D100] rounded-lg hover:bg-[#00B800] transition-colors uppercase tracking-wider"
+            className="btn-primary uppercase tracking-wider"
+            style={{ fontSize: '18px' }}
           >
             Get Started
           </button>

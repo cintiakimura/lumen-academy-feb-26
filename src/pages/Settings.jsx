@@ -36,6 +36,7 @@ export default function Settings() {
   const [branding, setBranding] = useState(storageService.getBranding());
   const [logoPreview, setLogoPreview] = useState(branding.logo);
   const [saved, setSaved] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   const user = authService.getCurrentUser();
 
@@ -65,6 +66,12 @@ export default function Settings() {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
   const goBack = () => {
     if (user?.role === 'teacher') {
       navigate(createPageUrl('TeacherDashboard'));
@@ -85,10 +92,43 @@ export default function Settings() {
       </header>
 
       <div className="p-6 max-w-2xl mx-auto space-y-6">
-        {/* Branding Card */}
-        <Card className="glass-card border border-[#333333]">
+        {/* Theme Card */}
+        <Card style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
           <CardHeader>
-            <CardTitle className="text-[#e0e0e0]">Branding</CardTitle>
+            <CardTitle style={{ color: 'var(--text)' }}>Theme</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex gap-4">
+              <button
+                onClick={() => handleThemeChange('dark')}
+                className={`flex-1 p-6 rounded-xl border-2 transition-all ${
+                  theme === 'dark' 
+                    ? 'border-[#00c600] bg-[#00c600]/20' 
+                    : 'border-[var(--glass-border)] hover:border-[#00c600]'
+                }`}
+              >
+                <div className="text-4xl mb-2">🌙</div>
+                <p className="font-medium" style={{ color: 'var(--text)' }}>Dark</p>
+              </button>
+              <button
+                onClick={() => handleThemeChange('light')}
+                className={`flex-1 p-6 rounded-xl border-2 transition-all ${
+                  theme === 'light' 
+                    ? 'border-[#00c600] bg-[#00c600]/20' 
+                    : 'border-[var(--glass-border)] hover:border-[#00c600]'
+                }`}
+              >
+                <div className="text-4xl mb-2">☀️</div>
+                <p className="font-medium" style={{ color: 'var(--text)' }}>Light</p>
+              </button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Branding Card */}
+        <Card style={{ background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+          <CardHeader>
+            <CardTitle style={{ color: 'var(--text)' }}>Branding</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Logo */}
