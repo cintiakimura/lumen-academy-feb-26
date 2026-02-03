@@ -19,6 +19,10 @@ export default function Onboarding() {
     setTeachers([...teachers, '']);
   };
 
+  const handleRemoveTeacher = (index) => {
+    setTeachers(teachers.filter((_, i) => i !== index));
+  };
+
   const handleTeacherChange = (index, value) => {
     const newTeachers = [...teachers];
     newTeachers[index] = value;
