@@ -252,7 +252,7 @@ export default function CourseDetail() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-8">
+        <main className="flex-1 p-4 lg:p-8" style={{ background: 'linear-gradient(135deg, #1a2332 0%, #0f1419 100%)' }}>
           {activeLesson ? (
             <AnimatePresence mode="wait">
               {!showChat ? (

@@ -51,13 +51,18 @@ export default function UploadForm({ onCourseCreated, onClose }) {
     setError('');
 
     try {
-      const result = await grokService.structureCourse(
-        courseData.content,
-        courseData.title
-      );
+      const response = await base44.functions.invoke('structureCourse', {
+        content: courseData.content,
+        title: courseData.title,
+        category: courseData.category
+      });
 
-      setGeneratedLessons(result);
-      setStep(2);
+      if (response.data.success) {
+        setGeneratedLessons({ lessons: response.data.lessons });
+        setStep(2);
+      } else {
+        setError('Failed to process content. Please try again.');
+      }
     } catch (err) {
       setError('Failed to process content. Please try again.');
       console.error(err);
@@ -66,16 +71,25 @@ export default function UploadForm({ onCourseCreated, onClose }) {
     }
   };
 
-  const saveCourse = () => {
-    const newCourse = {
-      ...courseData,
-      lessons: generatedLessons.lessons,
-      is_published: true,
-      thumbnail: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=400`
-    };
-
-    storageService.addCourse(newCourse);
-    onCourseCreated?.(newCourse);
+  const saveCourse = async () => {
+    try {
+      const user = await base44.auth.me();
+      await base44.entities.Course.create({
+        title: courseData.title,
+        description: courseData.description || '',
+        content: courseData.content,
+        lessons: generatedLessons.lessons,
+        category: courseData.category,
+        thumbnail: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=400`,
+        teacher_id: user.id,
+        is_published: true
+      });
+      
+      onCourseCreated?.();
+    } catch (err) {
+      setError('Failed to save course. Please try again.');
+      console.error(err);
+    }
   };
 
   return (

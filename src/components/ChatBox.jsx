@@ -123,23 +123,20 @@ export default function ChatBox({
   };
 
   return (
-    <div className={cn('flex flex-col h-full bg-white rounded-xl overflow-hidden border border-[var(--primary)] border-opacity-20', className)}>
+    <div className={cn('flex flex-col h-full rounded-xl overflow-hidden', className)} style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
       {/* Header */}
-      <div className="px-5 py-4 bg-white border-b border-[var(--primary)] border-opacity-20">
+      <div className="px-5 py-4" style={{ background: 'rgba(255, 255, 255, 0.03)', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 border border-[var(--primary)] rounded-xl flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-[var(--accent)]" />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(201, 169, 110, 0.2)', border: '1px solid rgba(201, 169, 110, 0.3)' }}>
+            <Sparkles className="w-5 h-5" style={{ color: '#C9A96E' }} />
           </div>
           <div>
-            <h3 className="font-semibold text-[var(--text)]">Grok Tutor</h3>
-            <p className="text-xs text-[var(--text)] opacity-60">Powered by xAI</p>
+            <h3 className="font-semibold text-white">Grok Tutor</h3>
+            <p className="text-xs text-white/60">Powered by xAI</p>
           </div>
           {masteryScore > 0 && (
             <div className="ml-auto">
-              <div className={cn(
-                'px-3 py-1 rounded-full text-xs font-semibold border',
-                'border-[var(--primary)] text-[var(--primary)] bg-[var(--primary)] bg-opacity-10'
-              )}>
+              <div className="px-3 py-1 rounded-full text-xs font-semibold" style={{ background: 'rgba(201, 169, 110, 0.2)', border: '1px solid rgba(201, 169, 110, 0.4)', color: '#C9A96E' }}>
                 {Math.round(masteryScore)}% mastery
               </div>
             </div>
@@ -148,7 +145,7 @@ export default function ChatBox({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ background: 'rgba(0, 0, 0, 0.2)' }}>
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div
@@ -164,29 +161,28 @@ export default function ChatBox({
               <div className={cn(
                 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
                 message.role === 'user' 
-                  ? 'bg-blue-500' 
+                  ? '' 
                   : message.isSuccess 
-                    ? 'bg-emerald-500' 
-                    : 'bg-slate-200'
-              )}>
+                    ? '' 
+                    : ''
+              )} style={{ background: message.role === 'user' ? '#2A5D9A' : message.isSuccess ? '#C9A96E' : 'rgba(255, 255, 255, 0.1)' }}>
                 {message.role === 'user' ? (
                   <User className="w-4 h-4 text-white" />
                 ) : (
-                  <Bot className={cn('w-4 h-4', message.isSuccess ? 'text-white' : 'text-slate-600')} />
+                  <Bot className="w-4 h-4 text-white" />
                 )}
               </div>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className={cn(
-                  'max-w-[80%] rounded-2xl px-4 py-3',
-                  message.role === 'user' 
-                    ? 'bg-[var(--primary)] text-white rounded-tr-sm' 
-                    : message.isSuccess
-                      ? 'border border-[var(--accent)] text-[var(--text)] bg-[var(--accent)] bg-opacity-10 rounded-tl-sm'
-                      : 'bg-white text-[var(--text)] shadow-md border border-[var(--primary)] border-opacity-20 rounded-tl-sm'
-                )}
+                className="max-w-[80%] rounded-2xl px-4 py-3"
+                style={message.role === 'user' 
+                  ? { background: 'rgba(42, 93, 154, 0.9)', color: 'white', borderTopRightRadius: '4px', backdropFilter: 'blur(10px)' }
+                  : message.isSuccess
+                    ? { background: 'rgba(201, 169, 110, 0.2)', color: 'white', border: '1px solid rgba(201, 169, 110, 0.4)', borderTopLeftRadius: '4px', backdropFilter: 'blur(10px)' }
+                    : { background: 'rgba(255, 255, 255, 0.05)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.1)', borderTopLeftRadius: '4px', backdropFilter: 'blur(10px)' }
+                }
               >
                 <p className="text-sm leading-relaxed">{message.content}</p>
               </motion.div>
@@ -200,14 +196,14 @@ export default function ChatBox({
             animate={{ opacity: 1 }}
             className="flex gap-3"
           >
-            <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
-              <Bot className="w-4 h-4 text-slate-600" />
+            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
+              <Bot className="w-4 h-4 text-white" />
             </div>
-            <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
+            <div className="rounded-2xl rounded-tl-sm px-4 py-3" style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)' }}>
               <div className="flex gap-1">
-                <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'rgba(255, 255, 255, 0.5)', animationDelay: '0ms' }} />
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'rgba(255, 255, 255, 0.5)', animationDelay: '150ms' }} />
+                <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'rgba(255, 255, 255, 0.5)', animationDelay: '300ms' }} />
               </div>
             </div>
           </motion.div>
@@ -217,7 +213,7 @@ export default function ChatBox({
       </div>
 
       {/* Input */}
-      <div className="p-4 bg-white border-t border-slate-100">
+      <div className="p-4" style={{ background: 'rgba(255, 255, 255, 0.03)', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
         {showCelebration && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -226,7 +222,8 @@ export default function ChatBox({
           >
             <Button 
               onClick={onComplete}
-              className="w-full border-2 border-[var(--accent)] bg-white text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white font-semibold py-3 transition-all"
+              className="w-full font-semibold py-3 transition-all text-white"
+              style={{ background: 'rgba(201, 169, 110, 0.2)', border: '2px solid rgba(201, 169, 110, 0.5)', backdropFilter: 'blur(10px)' }}
             >
               <Sparkles className="w-4 h-4 mr-2" />
               Continue to Next Lesson
@@ -248,13 +245,15 @@ export default function ChatBox({
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Type your message..."
               disabled={isLoading}
-              className="pr-12 py-6 rounded-xl border-slate-200 focus:border-blue-300 focus:ring-blue-200"
+              className="pr-12 py-6 rounded-xl text-white placeholder:text-white/40"
+              style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }}
             />
             <Button
               onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg border border-[var(--primary)] bg-white hover:bg-[var(--primary)] text-[var(--primary)] hover:text-white transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg transition-all"
+              style={{ background: 'rgba(42, 93, 154, 0.3)', border: '1px solid rgba(42, 93, 154, 0.5)', color: 'white' }}
             >
               <Send className="w-4 h-4" />
             </Button>
