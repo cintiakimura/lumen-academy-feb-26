@@ -14,7 +14,6 @@ export default function UploadForm({ onCourseCreated, onClose }) {
   const [courseData, setCourseData] = useState({
     title: '',
     description: '',
-    category: 'other',
     content: ''
   });
   const [isProcessing, setIsProcessing] = useState(false);
@@ -61,8 +60,7 @@ export default function UploadForm({ onCourseCreated, onClose }) {
     try {
       const response = await base44.functions.invoke('structureCourse', {
         content: courseData.content,
-        title: courseData.title,
-        category: courseData.category
+        title: courseData.title
       });
 
       if (response.data.success) {
@@ -87,7 +85,7 @@ export default function UploadForm({ onCourseCreated, onClose }) {
         description: courseData.description || '',
         content: courseData.content,
         lessons: generatedLessons.lessons,
-        category: courseData.category,
+        category: 'other',
         thumbnail: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000)}?w=400`,
         teacher_id: user.id,
         is_published: true
