@@ -10,7 +10,7 @@ export default function Landing() {
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       {/* Top Nav */}
       <nav className="absolute top-0 left-0 right-0 p-6 lg:p-8 flex items-center justify-between z-50">
-        <div className="text-2xl tracking-tight" style={{ color: 'var(--primary)' }}>
+        <div className="text-2xl font-bold tracking-tight" style={{ color: 'var(--primary)' }}>
           LUMEN
         </div>
         <div className="flex gap-4">
@@ -71,12 +71,12 @@ export default function Landing() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-6xl" style={{ textAlign: 'left' }}>
-          <h1 style={{ fontSize: '48px', color: 'var(--primary)', marginBottom: '12px', lineHeight: 1.2 }}>
-            Your brain. Your pace. We understand.
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <h1 style={{ fontSize: '40px', fontWeight: 600, color: 'var(--primary)', marginBottom: '12px', lineHeight: 1.2 }}>
+            Learning made easy
           </h1>
-          <p style={{ fontSize: '22px', color: 'var(--text)', maxWidth: '640px' }}>
-            Cutting-edge AI meets neuroscience to transform any course into a truly personalized learning experience.
+          <p style={{ fontSize: '18px', fontWeight: 400, color: 'var(--text)', maxWidth: '640px' }}>
+            Turn any content into adaptive micro-lessons
           </p>
         </div>
       </section>
@@ -84,53 +84,83 @@ export default function Landing() {
       {/* Features Section */}
       <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-6">
-            <p style={{ fontSize: '19px', color: 'var(--text)', lineHeight: 1.8, maxWidth: '800px' }}>
-              Nobody learns the same way.
-            </p>
-            <p style={{ fontSize: '19px', color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '800px' }}>
-              Some need to talk it out.<br/>
-              Some need to see it first.<br/>
-              Some need to imagine it step by step.
-            </p>
-            <p style={{ fontSize: '19px', color: 'var(--text)', lineHeight: 1.8, maxWidth: '800px' }}>
-              We don't force one method on everyone.<br/>
-              We adapt — to your pace, your style, your rhythm.
-            </p>
-            <p style={{ fontSize: '19px', color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '800px' }}>
-              Short bursts when you're overwhelmed. Deeper dives when you're in flow. No overload, no rigid structure, no one-size-fits-all.
-            </p>
-            <p style={{ fontSize: '19px', color: 'var(--text)', lineHeight: 1.8, maxWidth: '800px' }}>
-              Upload your content (videos, PDFs, text, anything).<br/>
-              We reshape it so it fits you — and every person in your team.
-            </p>
-            <p style={{ fontSize: '19px', color: 'var(--text)', lineHeight: 1.8, maxWidth: '800px' }}>
-              The result: real retention, real mastery, real progress.
-            </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>01</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Adaptive learning</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                AI-powered lessons that adapt to your pace, learning style, and schedule. Night owl or early bird, we're ready when you are.
+              </p>
+            </div>
+            
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>02</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Any format, any time</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Convert content into podcasts, videos, slides, or interactive conversations. Learn on-the-go or deep-dive at your desk.
+              </p>
+            </div>
+            
+            <div style={{ padding: '24px', background: 'var(--glass-bg)', backdropFilter: 'blur(10px)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
+              <div style={{ color: 'var(--primary)', fontSize: '48px', fontWeight: 700, marginBottom: '16px' }}>03</div>
+              <h3 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--text)', marginBottom: '12px' }}>Anywhere you need</h3>
+              <p style={{ fontSize: '16px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                Deliver remote training with the same quality as in-person sessions. Access your courses from any device, anywhere.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Technology Section */}
       <section className="py-12 px-6 lg:px-8 bg-[#0D0D0D]">
-        <div className="max-w-6xl mx-auto">
-          <p style={{ fontSize: '19px', color: 'var(--text-muted)', lineHeight: 1.8, maxWidth: '800px', marginBottom: '24px' }}>
-            Backed by more than 103 studies on how the brain actually learns.
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-2xl lg:text-3xl font-light text-white mb-4">
+            Pioneering technology for your learning
+          </h2>
+          <p className="text-lg text-[#8B8B8B] mb-8 max-w-3xl mx-auto">
+            Cutting-edge AI meets neuroscience research — every moment designed to fit your unique learning profile
           </p>
-          <p style={{ fontSize: '19px', color: 'var(--text)', lineHeight: 1.8, maxWidth: '800px' }}>
-            Because the goal isn't to pass a test.<br/>
-            It's to make you better at what you do.
-          </p>
+
+          <div className="space-y-8 text-left max-w-2xl mx-auto">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] font-bold text-xl">AI</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium text-white mb-2">Smart Content Engine</h3>
+                <p className="text-[#8B8B8B]">
+                  Transforms any content into bite-sized, engaging lessons optimized for retention
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#00D100] rounded-lg flex items-center justify-center flex-shrink-0">
+                <span className="text-[#1A1A1A] font-bold text-xl">🧠</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-medium text-white mb-2">Adaptive Platform</h3>
+                <p className="text-[#8B8B8B]">
+                  Monitors your progress and adjusts in real-time based on neuroscience principles
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="px-6 lg:px-8" style={{ paddingTop: '12px', paddingBottom: '12px' }}>
         <div className="max-w-4xl mx-auto text-center">
+          <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Backed by 103+ studies</p>
+          <h2 style={{ fontSize: '32px', fontWeight: 600, color: 'var(--text)', marginBottom: '32px' }}>
+            Because one method doesn't fit everyone
+          </h2>
           <button 
             onClick={handleLogin}
             className="btn-primary uppercase tracking-wider"
-            style={{ fontSize: '22px' }}
+            style={{ fontSize: '18px' }}
           >
             Get Started
           </button>
